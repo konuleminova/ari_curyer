@@ -3,8 +3,11 @@ import 'package:ari_kuryer/business_logic/routes/route_navigation.dart';
 import 'package:ari_kuryer/services/api_helper/api_response.dart';
 import 'package:ari_kuryer/services/hooks/useSideEffect.dart';
 import 'package:ari_kuryer/services/hooks/use_callback.dart';
+import 'package:ari_kuryer/services/provider/provider.dart';
 import 'package:ari_kuryer/services/services/login_service.dart';
 import 'package:ari_kuryer/ui/common_widgets/error_handler.dart';
+import 'package:ari_kuryer/ui/provider/token_action.dart';
+import 'package:ari_kuryer/ui/provider/token_status.dart';
 import 'package:ari_kuryer/ui/views/login/login.dart';
 import 'package:ari_kuryer/utils/sharedpref/sp_util.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +39,9 @@ class LoginViewModel extends HookWidget {
         SpUtil.putString('name', apiResponse?.data?.name);
         SpUtil.putString('userid', apiResponse.data.userid);
         SpUtil.putString('token', apiResponse?.data?.token).then((value) {
+          final Store<TokenState, TokenAction> tokenStore =
+              useProvider<Store<TokenState, TokenAction>>();
+          tokenStore.dispatch(TokenAction(false));
           pushRouteWithName('/home');
         });
       }
