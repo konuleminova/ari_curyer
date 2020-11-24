@@ -1,5 +1,4 @@
 import 'package:ari_kuryer/business_logic/models/Order.dart';
-import 'package:ari_kuryer/services/services/order_service.dart';
 import 'package:ari_kuryer/utils/theme_color.dart';
 import 'package:flutter/material.dart';
 import 'package:ari_kuryer/utils/size_config.dart';
@@ -7,8 +6,11 @@ import 'package:ari_kuryer/utils/size_config.dart';
 class OrderItemWidget extends StatelessWidget {
   final Order order;
   Function(String orderId) assignOrder;
+  final Function(String orderId) takeOrder;
+  final Function(String orderId) giveOrder;
 
-  OrderItemWidget({this.order, this.assignOrder});
+  OrderItemWidget(
+      {this.order, this.assignOrder, this.takeOrder, this.giveOrder});
 
   Color statusColor;
 
@@ -57,7 +59,15 @@ class OrderItemWidget extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                assignOrder(order.order);
+                if (order.order != null) {
+                  if (order.status == 'go to rest') {
+                    takeOrder(order.order);
+                  } else if (order.status == 'go to user') {
+                    giveOrder(order.order);
+                  } else {
+                    assignOrder(order.order);
+                  }
+                }
               },
               child: Container(
                 margin: EdgeInsets.all(16),

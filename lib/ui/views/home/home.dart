@@ -7,8 +7,10 @@ import 'package:flutter/material.dart';
 class HomeView extends StatelessWidget {
   final Order order;
   final Function(String orderId) assignOrder;
+  final Function(String orderId) takeOrder;
+  final Function(String orderId) giveOrder;
 
-  HomeView({this.order, this.assignOrder});
+  HomeView({this.order, this.assignOrder, this.giveOrder, this.takeOrder});
 
 //
   @override

@@ -8,4 +8,10 @@ class ApiConfig {
 
   String ASSIGN_ORDER(String orderId, String token) =>
       '${BASE_URl}assign&order=${orderId}&token=${token}';
+
+  String TAKE_ORDER(String orderId, String token) =>
+      '${BASE_URl}take&order=${orderId}&token=${token}';
+
+  String GIVE_ORDER(String orderId, String token) =>
+      '${BASE_URl}give&order=${orderId}&token=${token}';
 }

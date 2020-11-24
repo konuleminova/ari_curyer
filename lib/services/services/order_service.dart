@@ -9,6 +9,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
+//Get order status
 ApiResponse<Order> useFetchOrderStatus(UniqueKey key) {
   final ApiConfig apiConfig = useApiConfig();
   final DioConfig dioConfig = useMemoized(
@@ -21,12 +22,41 @@ ApiResponse<Order> useFetchOrderStatus(UniqueKey key) {
   return apiResponse;
 }
 
+//Assign order
 ApiResponse<Order> useAssignOrder(String orderId) {
   final ApiConfig apiConfig = useApiConfig();
   final DioConfig dioConfig = useMemoized(() {
     if (orderId == null) return null;
     return DioConfig<Order>(
         path: apiConfig.ASSIGN_ORDER(orderId, SpUtil.getString('token')),
+        transformResponse: (Response response) =>
+            Order.fromJson(response.data));
+  }, [orderId]);
+  ApiResponse<Order> apiResponse = useDioRequest(dioConfig);
+  return apiResponse;
+}
+
+//Take order
+ApiResponse<Order> useTakeOrder(String orderId) {
+  final ApiConfig apiConfig = useApiConfig();
+  final DioConfig dioConfig = useMemoized(() {
+    if (orderId == null) return null;
+    return DioConfig<Order>(
+        path: apiConfig.TAKE_ORDER(orderId, SpUtil.getString('token')),
+        transformResponse: (Response response) =>
+            Order.fromJson(response.data));
+  }, [orderId]);
+  ApiResponse<Order> apiResponse = useDioRequest(dioConfig);
+  return apiResponse;
+}
+
+//Give order
+ApiResponse<Order> useGiveOrder(String orderId) {
+  final ApiConfig apiConfig = useApiConfig();
+  final DioConfig dioConfig = useMemoized(() {
+    if (orderId == null) return null;
+    return DioConfig<Order>(
+        path: apiConfig.GIVE_ORDER(orderId, SpUtil.getString('token')),
         transformResponse: (Response response) =>
             Order.fromJson(response.data));
   }, [orderId]);

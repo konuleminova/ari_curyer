@@ -10,26 +10,58 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 class HomeViewModel extends HookWidget {
   @override
   Widget build(BuildContext context) {
-    var orderId = useState<String>();
+    var assignOrderId = useState<String>();
+    var takeOrderId = useState<String>();
+    var giveOrderId = useState<String>();
     var fetchOrderStatusKey = useState<UniqueKey>();
 
-    useAssignOrder(orderId.value);
+    //ASSIGN ORDER
+    useAssignOrder(assignOrderId.value);
+
+    //TAKE ORDER
+    useTakeOrder(takeOrderId.value);
+
+    //GIVE ORDER
+    useGiveOrder(giveOrderId.value);
+
     ApiResponse<Order> apiResponse =
         useFetchOrderStatus(fetchOrderStatusKey.value);
 
     final assignOrderCallback = useCallback((String order) {
       if (order != null) {
-        orderId.value = order;
+        assignOrderId.value = order;
         fetchOrderStatusKey.value = new UniqueKey();
       }
 
       return () {};
-    }, [orderId.value]);
+    }, [assignOrderId.value]);
+
+    //TAKE ORDER
+    final takeOrderCallback = useCallback((String order) {
+      if (order != null) {
+        takeOrderId.value = order;
+        fetchOrderStatusKey.value = new UniqueKey();
+      }
+
+      return () {};
+    }, [takeOrderId.value]);
+
+    //GIVE ORDER
+    final giveOrderCallback = useCallback((String order) {
+      if (order != null) {
+        giveOrderId.value = order;
+        fetchOrderStatusKey.value = new UniqueKey();
+      }
+
+      return () {};
+    }, [giveOrderId.value]);
 
     return CustomErrorHandler(
       child: HomeView(
         order: (apiResponse.data),
         assignOrder: assignOrderCallback,
+        takeOrder: takeOrderCallback,
+        giveOrder: giveOrderCallback,
       ),
       statuses: [apiResponse.status],
       errors: [apiResponse.error],
