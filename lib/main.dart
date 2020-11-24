@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Bitter-Light',
         accentColor: ThemeColor().yellowColor,
-        primarySwatch: ThemeColor().greenColor,
+        primarySwatch: Colors.amber,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: InitPage(),

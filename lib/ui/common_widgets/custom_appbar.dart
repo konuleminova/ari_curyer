@@ -21,7 +21,7 @@ class CustomAppBar extends HookWidget implements PreferredSizeWidget {
         AppBar(
          actions: <Widget>[SizedBox()],
           elevation: 0,
-          backgroundColor: ThemeColor().greenColor,
+          backgroundColor: Colors.white,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
@@ -45,36 +45,6 @@ class CustomAppBar extends HookWidget implements PreferredSizeWidget {
             ],
           ),
         ),
-        Positioned(
-          bottom: 3,
-          left: 0,
-          right: 0,
-          child: Container(
-              decoration: BoxDecoration(
-                  color: ThemeColor().yellowColor,
-                  borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(20),
-                      topLeft: Radius.circular(20))),
-              height: 44.toHeight,
-              padding: EdgeInsets.symmetric(horizontal: 4.toWidth),
-              child: Center(
-                child: Text(
-                  'Доброе утро Ильхам, сегодня в Баку 23 оС, отличная погода...',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 11.toFont),
-                ),
-              )),
-        ),
-        Positioned(
-          child: Container(
-            height: 4,
-            color: ThemeColor().yellowColor
-          ),
-          bottom: 0,
-          left: 0,
-          right: 0,
-        )
       ],
     );
   }
@@ -82,5 +52,5 @@ class CustomAppBar extends HookWidget implements PreferredSizeWidget {
 //final AppBar appBar=
   @override
   // TODO: implement preferredSize
-  Size get preferredSize => Size.fromHeight(85.toHeight);
+  Size get preferredSize => Size.fromHeight(44.toHeight);
 }

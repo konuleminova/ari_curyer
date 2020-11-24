@@ -27,14 +27,12 @@ class LoginView extends StatelessWidget {
           Image.asset(
             'assets/images/logo.png',
             width: 160.toWidth,
-            height: 120.toHeight,
+            height: 80.toHeight,
           ),
-          SizedBox(
-            height: 16.toHeight,
-          ),
+          SizedBox(height: 44.toHeight,),
           Container(
             margin: EdgeInsets.symmetric(
-                horizontal: 80.toWidth, vertical: 16.toHeight),
+                horizontal: 60.toWidth, vertical: 16.toHeight),
             child: Column(
               children: <Widget>[
                 Container(

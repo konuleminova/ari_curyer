@@ -1,6 +1,7 @@
 import 'package:ari_kuryer/business_logic/routes/nested_root.dart';
 import 'package:ari_kuryer/business_logic/routes/route_names.dart';
 import 'package:ari_kuryer/business_logic/routes/route_navigation.dart';
+import 'package:ari_kuryer/ui/common_widgets/custom_appbar.dart';
 import 'package:ari_kuryer/utils/sharedpref/sp_util.dart';
 import 'package:ari_kuryer/utils/size_config.dart';
 import 'package:ari_kuryer/utils/theme_color.dart';
@@ -22,8 +23,18 @@ class _InitPage extends State<InitPage> {
     SizeConfig().init(context);
     // TODO: implement build
     return Scaffold(
-      backgroundColor: ThemeColor().greyColor,
-      body: NestedNavigator(initialRoute: '/', routes: routeNames),
+      backgroundColor: Colors.white,
+      appBar: CustomAppBar(),
+      body: Container(
+        width: SizeConfig().screenWidth,
+        height: SizeConfig().screenHeight,
+        child: NestedNavigator(
+            initialRoute: '/',
+            routes: routeNames),
+        decoration: BoxDecoration(
+            color: ThemeColor().yellowColor,
+            borderRadius: BorderRadius.all(Radius.circular(20))),
+      )
     );
   }
 
