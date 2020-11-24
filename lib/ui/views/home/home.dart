@@ -6,21 +6,13 @@ import 'package:flutter/material.dart';
 
 class HomeView extends StatelessWidget {
   final Order order;
+  final Function(String orderId) assignOrder;
 
-  HomeView({this.order});
-
-  Color statusColor;
+  HomeView({this.order, this.assignOrder});
 
 //
   @override
   Widget build(BuildContext context) {
-    if (order.status == 'go to user') {
-      statusColor = ThemeColor().blue;
-    } else if (order.status == 'go to rest') {
-      statusColor = ThemeColor().blue.withOpacity(0.5);
-    } else {
-      statusColor = ThemeColor().yellowColor;
-    }
     // TODO: implement build
     return Container(
       child: Column(
@@ -31,7 +23,8 @@ class HomeView extends StatelessWidget {
                   child: Text('You have no order.'),
                 )
               : OrderItemWidget(
-                  statusColor: statusColor,
+                  order: order,
+                  assignOrder: assignOrder,
                 ),
         ],
       ),

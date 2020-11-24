@@ -6,16 +6,17 @@ import 'package:ari_kuryer/services/hooks/useApiConfig.dart';
 import 'package:ari_kuryer/services/hooks/useDioRequest.dart';
 import 'package:ari_kuryer/utils/sharedpref/sp_util.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-ApiResponse<Order> useFetchOrderStatus() {
+ApiResponse<Order> useFetchOrderStatus(UniqueKey key) {
   final ApiConfig apiConfig = useApiConfig();
   final DioConfig dioConfig = useMemoized(
       () => DioConfig<Order>(
           path: apiConfig.FETCH_ORDER_STATUS(SpUtil.getString('token')),
           transformResponse: (Response response) =>
               Order.fromJson(response.data)),
-      []);
+      [key]);
   ApiResponse<Order> apiResponse = useDioRequest(dioConfig);
   return apiResponse;
 }
