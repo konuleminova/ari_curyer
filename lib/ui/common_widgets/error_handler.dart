@@ -12,10 +12,9 @@ class CustomErrorHandler extends HookWidget {
   final List<AppException> errors;
   final Widget child;
   final Function onRefresh;
-  final isInitial;
 
   const CustomErrorHandler(
-      {this.statuses, this.child, this.errors, this.onRefresh, this.isInitial});
+      {this.statuses, this.child, this.errors, this.onRefresh});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +27,7 @@ class CustomErrorHandler extends HookWidget {
         null;
     final ctx = useContext();
     useSideEffect(() {
-      if (hasError && !isInitial) {
+      if (hasError) {
         showDialog(
             context: ctx,
             builder: (BuildContext context) => ErrorDialog(

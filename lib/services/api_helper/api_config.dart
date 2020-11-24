@@ -4,8 +4,8 @@ class ApiConfig {
   String LOGIN(String login, String password) =>
       '${BASE_URl}login&login=${login}&pass=${password}';
 
-  String ORDER_LIST(String token) => '${BASE_URl}orderlist&token=${token}';
+  String FETCH_ORDER_STATUS(String token) => '${BASE_URl}status&token=${token}';
 
-  String CHANGE_STATUS(String token, String id) =>
-      '${BASE_URl}orderlist&token=${token}&change=${id}';
+  String ASSIGN_ORDER(String orderId, String token) =>
+      '${BASE_URl}assign&order=${orderId}&token=${token}';
 }

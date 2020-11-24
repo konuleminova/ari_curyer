@@ -1,4 +1,4 @@
-import 'package:ari_kuryer/business_logic/models/RestourantResponse.dart';
+import 'package:ari_kuryer/business_logic/models/Curyer.dart';
 import 'package:ari_kuryer/business_logic/routes/route_navigation.dart';
 import 'package:ari_kuryer/services/api_helper/api_response.dart';
 import 'package:ari_kuryer/services/hooks/useSideEffect.dart';
@@ -29,15 +29,14 @@ class LoginViewModel extends HookWidget {
       }
     }, [login.value, password.value]);
 
-    ApiResponse<RestourantResponse> apiResponse =
+    ApiResponse<Curyer> apiResponse =
         useLogin(login?.value, password?.value);
 
     useSideEffect(() {
       if (apiResponse?.data?.token != null) {
-        SpUtil.putString('name',  apiResponse?.data?.name);
+        SpUtil.putString('name', apiResponse?.data?.name);
         SpUtil.putString('token', apiResponse?.data?.token).then((value) {
           pushRouteWithName('/home');
-
         });
       }
       return () {};
@@ -46,10 +45,6 @@ class LoginViewModel extends HookWidget {
     return CustomErrorHandler(
       statuses: [apiResponse.status],
       errors: [apiResponse.error],
-      isInitial: !(loginController.text != null &&
-          passController.text != null &&
-          loginController.text.isNotEmpty &&
-          passController.text.isNotEmpty),
       child: LoginView(
         loginController: loginController,
         passController: passController,

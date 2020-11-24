@@ -1,11 +1,11 @@
-class RestourantResponse {
+class Curyer {
   String found;
   String restid;
   String name;
   String coords;
   String token;
 
-  RestourantResponse.fromJson(Map<String, dynamic> json) {
+  Curyer.fromJson(Map<String, dynamic> json) {
     found = json['found'];
     restid = json['restid'];
     name = json['name'];

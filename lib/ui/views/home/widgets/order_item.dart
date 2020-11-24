@@ -3,8 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:ari_kuryer/utils/size_config.dart';
 
 class OrderItemWidget extends StatelessWidget {
+  final Color statusColor;
+
+
+  OrderItemWidget({this.statusColor});
+
   @override
   Widget build(BuildContext context) {
+
     // TODO: implement build
     return Container(
         height: 180.toHeight,
@@ -29,8 +35,13 @@ class OrderItemWidget extends StatelessWidget {
                       maxLines: 3,
                     ),
                   ),
-                  SizedBox(width: 26.toWidth,),
-                  Text('934',style: TextStyle(fontWeight: FontWeight.w700),)
+                  SizedBox(
+                    width: 26.toWidth,
+                  ),
+                  Text(
+                    '934',
+                    style: TextStyle(fontWeight: FontWeight.w700),
+                  )
                 ],
               ),
             ),
@@ -40,16 +51,20 @@ class OrderItemWidget extends StatelessWidget {
                   padding: EdgeInsets.all(16.toWidth),
                   width: SizeConfig().screenHeight,
                   height: 44.toHeight,
-                  color: ThemeColor().yellowColor,
+                  color: statusColor,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Text("I WANT THIS",style: TextStyle(fontSize: 20.toFont,fontWeight: FontWeight.w700),),
+                      Text(
+                        "I WANT THIS",
+                        style: TextStyle(
+                            fontSize: 20.toFont, fontWeight: FontWeight.w700),
+                      ),
                       SizedBox(
                         width: 4.toWidth,
                       ),
-                    Image.asset('assets/images/done.png')
+                      Image.asset('assets/images/done.png')
                     ],
                   )),
             )
