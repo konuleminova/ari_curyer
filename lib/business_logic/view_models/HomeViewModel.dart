@@ -12,6 +12,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 class HomeViewModel extends HookWidget {
+  Timer timer;
+
   @override
   Widget build(BuildContext context) {
     var assignOrderId = useState<String>();
@@ -21,12 +23,17 @@ class HomeViewModel extends HookWidget {
     var refreshKey = useState<UniqueKey>();
     var curyerCoords = useState<String>();
 
+    //Timer for update  CURYER COORDINATES
+    useEffect(() {
+      timer = Timer.periodic(Duration(seconds: 5), (timer) {
+        curyerCoords.value = UniqueKey().toString();
+      });
+      return () {
+        timer.cancel();
+      };
+    }, []);
+
     //UPDATE CURYER COORDINATES
-    Timer.periodic(Duration(seconds: 5), (timer) {
-     // Random random = new Random();
-      //int randomNumber = random.nextInt(100);
-     // curyerCoords.value = randomNumber.toString();
-    });
     useUpdateCuryerCoords(curyerCoords.value);
 
     //ASSIGN ORDER
