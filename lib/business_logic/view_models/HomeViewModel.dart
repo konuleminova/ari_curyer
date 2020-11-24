@@ -13,6 +13,7 @@ class HomeViewModel extends HookWidget {
     var assignOrderId = useState<String>();
     var takeOrderId = useState<String>();
     var giveOrderId = useState<String>();
+
     var fetchOrderStatusKey = useState<UniqueKey>();
 
     //ASSIGN ORDER
@@ -24,9 +25,11 @@ class HomeViewModel extends HookWidget {
     //GIVE ORDER
     useGiveOrder(giveOrderId.value);
 
+    //Fetch order status
     ApiResponse<Order> apiResponse =
         useFetchOrderStatus(fetchOrderStatusKey.value);
 
+    //ASSIGN ORDER CALLBACK
     final assignOrderCallback = useCallback((String order) {
       if (order != null) {
         assignOrderId.value = order;
