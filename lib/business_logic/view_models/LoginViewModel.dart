@@ -37,10 +37,10 @@ class LoginViewModel extends HookWidget {
     useSideEffect(() {
       if (apiResponse?.data?.token != null) {
         SpUtil.putString('name', apiResponse?.data?.name);
-        SpUtil.putString('userid', apiResponse.data.userid);
+       SpUtil.putString('userid', apiResponse.data.userid);
         final Store<TokenState, TokenAction> tokenStore =
-        useProvider<Store<TokenState, TokenAction>>();
-        tokenStore.dispatch(TokenAction(false));
+            useProvider<Store<TokenState, TokenAction>>();
+        tokenStore.dispatch(TokenAction(true));
         SpUtil.putString('token', apiResponse?.data?.token);
         pushReplaceRouteWithName('/home');
       }
