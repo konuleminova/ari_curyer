@@ -19,25 +19,18 @@ class LoginViewModel extends HookWidget {
   Widget build(BuildContext context) {
     final loginController = useTextEditingController(text: '');
     final passController = useTextEditingController(text: '');
-    final ValueNotifier<String> login = useState<String>('');
-    final ValueNotifier<String> password = useState<String>('');
+    var login = useState<String>('');
+    var password = useState<String>('');
+    var loginKey = useState<UniqueKey>();
 
-    final loginCallBack = useCallback(() {
-      if (loginController.text != null &&
-          passController.text != null &&
-          loginController.text.isNotEmpty &&
-          passController.text.isNotEmpty) {
-        login.value = loginController.text;
-        password.value = passController.text;
-      }
-    }, [login.value, password.value]);
+    ApiResponse<Curyer> apiResponse =
+        useLogin(login?.value, password?.value, loginKey.value);
 
-    ApiResponse<Curyer> apiResponse = useLogin(login?.value, password?.value);
-
+    //GET TOKEN STATUS
     useSideEffect(() {
       if (apiResponse?.data?.token != null) {
         SpUtil.putString('name', apiResponse?.data?.name);
-       SpUtil.putString('userid', apiResponse.data.userid);
+        SpUtil.putString('userid', apiResponse.data.userid);
         final Store<TokenState, TokenAction> tokenStore =
             useProvider<Store<TokenState, TokenAction>>();
         tokenStore.dispatch(TokenAction(true));
@@ -46,6 +39,19 @@ class LoginViewModel extends HookWidget {
       }
       return () {};
     }, [apiResponse]);
+
+    //LOGIN CALLBACK
+    final loginCallBack = useCallback(() {
+      if (loginController.text != null &&
+          passController.text != null &&
+          loginController.text.isNotEmpty &&
+          passController.text.isNotEmpty) {
+        login.value = loginController.text;
+        password.value = passController.text;
+        loginKey.value = UniqueKey();
+      }
+    }, [login.value, password.value]);
+
     // TODO: implement build
     return CustomErrorHandler(
       statuses: [apiResponse.status],
