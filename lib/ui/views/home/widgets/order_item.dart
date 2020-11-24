@@ -61,7 +61,7 @@ class OrderItemWidget extends StatelessWidget {
               onTap: () {
                 //print('ORDER ID ${order.order}');
                 print('ORDER status ${order.status}');
-                if (true) {
+                if (order.order != null) {
                   if (order.status == 'go to rest') {
                     takeOrder(order.order);
                   } else if (order.status == 'go to user') {

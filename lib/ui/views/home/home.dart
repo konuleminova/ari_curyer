@@ -19,10 +19,13 @@ class HomeView extends StatelessWidget {
     return Container(
       child: Column(
         children: <Widget>[
-          false
+          order.status == 'waiting'
               ? Container(
                   margin: EdgeInsets.only(top: 16.toHeight),
-                  child: Text('You have no order.'),
+                  child: Text(
+                    'You have no order.',
+                    style: TextStyle(fontWeight: FontWeight.w500),
+                  ),
                 )
               : OrderItemWidget(
                   order: order,

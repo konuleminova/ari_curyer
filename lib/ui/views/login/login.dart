@@ -1,5 +1,4 @@
 import 'package:ari_kuryer/services/api_helper/api_response.dart';
-import 'package:ari_kuryer/ui/common_widgets/error_handler.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ari_kuryer/utils/size_config.dart';
