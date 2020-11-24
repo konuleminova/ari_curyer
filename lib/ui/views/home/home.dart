@@ -11,20 +11,21 @@ class HomeView extends StatelessWidget {
 
   Color statusColor;
 
+//
   @override
   Widget build(BuildContext context) {
     if (order.status == 'go to user') {
       statusColor = ThemeColor().blue;
     } else if (order.status == 'go to rest') {
       statusColor = ThemeColor().blue.withOpacity(0.5);
-    } else if (order.status == 'order') {
+    } else {
       statusColor = ThemeColor().yellowColor;
     }
     // TODO: implement build
     return Container(
       child: Column(
         children: <Widget>[
-          order.status == 'waiting'
+          false
               ? Container(
                   margin: EdgeInsets.only(top: 16.toHeight),
                   child: Text('You have no order.'),

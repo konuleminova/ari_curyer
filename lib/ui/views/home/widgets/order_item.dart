@@ -5,12 +5,10 @@ import 'package:ari_kuryer/utils/size_config.dart';
 class OrderItemWidget extends StatelessWidget {
   final Color statusColor;
 
-
   OrderItemWidget({this.statusColor});
 
   @override
   Widget build(BuildContext context) {
-
     // TODO: implement build
     return Container(
         height: 180.toHeight,
@@ -59,12 +57,19 @@ class OrderItemWidget extends StatelessWidget {
                       Text(
                         "I WANT THIS",
                         style: TextStyle(
-                            fontSize: 20.toFont, fontWeight: FontWeight.w700),
+                            fontSize: 20.toFont,
+                            fontWeight: FontWeight.w700,
+                            color: statusColor == ThemeColor().yellowColor
+                                ? Colors.black
+                                : Colors.white),
                       ),
                       SizedBox(
                         width: 4.toWidth,
                       ),
-                      Image.asset('assets/images/done.png')
+                      Image.asset('assets/images/done.png',
+                          color: statusColor == ThemeColor().yellowColor
+                              ? Colors.black
+                              : Colors.white)
                     ],
                   )),
             )
