@@ -34,7 +34,7 @@ class LoginViewModel extends HookWidget {
 
     useSideEffect(() {
       if (apiResponse?.data?.token != null) {
-        SpUtil.putString('name surname',  apiResponse?.data?.name);
+        SpUtil.putString('name',  apiResponse?.data?.name);
         SpUtil.putString('token', apiResponse?.data?.token).then((value) {
           pushRouteWithName('/home');
 
