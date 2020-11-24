@@ -10,7 +10,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 //Update curyer coordinates
 
-ApiResponse<Order> useGiveOrder(String coords) {
+ApiResponse<Order> useUpdateCuryerCoords(String coords) {
   final ApiConfig apiConfig = useApiConfig();
   final DioConfig dioConfig = useMemoized(() {
     if (coords == null) return null;
