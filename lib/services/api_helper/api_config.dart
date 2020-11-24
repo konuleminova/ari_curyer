@@ -14,4 +14,7 @@ class ApiConfig {
 
   String GIVE_ORDER(String orderId, String token) =>
       '${BASE_URl}give&order=${orderId}&token=${token}';
+
+  String UPDATE_COORDS(String coords, String token) =>
+      '${BASE_URl}updatecoords&coords=${coords}&token=${token}';
 }

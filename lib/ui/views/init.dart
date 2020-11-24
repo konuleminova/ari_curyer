@@ -49,7 +49,8 @@ class InitPage extends HookWidget {
           child: NestedNavigator(initialRoute: '/', routes: routeNames),
           decoration: BoxDecoration(
               color: ThemeColor().yellowColor,
-              borderRadius: BorderRadius.all(Radius.circular(20))),
+              borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(20), topLeft: Radius.circular(20))),
         ));
   }
 }
