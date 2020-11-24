@@ -38,12 +38,11 @@ class LoginViewModel extends HookWidget {
       if (apiResponse?.data?.token != null) {
         SpUtil.putString('name', apiResponse?.data?.name);
         SpUtil.putString('userid', apiResponse.data.userid);
-        SpUtil.putString('token', apiResponse?.data?.token).then((value) {
-          final Store<TokenState, TokenAction> tokenStore =
-              useProvider<Store<TokenState, TokenAction>>();
-          tokenStore.dispatch(TokenAction(false));
-          pushRouteWithName('/home');
-        });
+        final Store<TokenState, TokenAction> tokenStore =
+        useProvider<Store<TokenState, TokenAction>>();
+        tokenStore.dispatch(TokenAction(false));
+        SpUtil.putString('token', apiResponse?.data?.token);
+        pushReplaceRouteWithName('/home');
       }
       return () {};
     }, [apiResponse]);

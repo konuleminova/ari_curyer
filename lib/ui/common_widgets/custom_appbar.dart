@@ -1,3 +1,4 @@
+import 'package:ari_kuryer/business_logic/routes/route_names.dart';
 import 'package:ari_kuryer/business_logic/routes/route_navigation.dart';
 import 'package:ari_kuryer/utils/image_config.dart';
 import 'package:ari_kuryer/utils/sharedpref/sp_util.dart';
@@ -12,7 +13,7 @@ class CustomAppBar extends HookWidget implements PreferredSizeWidget {
   final bool hasToken;
   final Function clearToken;
 
-  CustomAppBar({this.hasToken,this.clearToken});
+  CustomAppBar({this.hasToken, this.clearToken});
 
   @override
   Widget build(BuildContext context) {
@@ -84,10 +85,15 @@ class CustomAppBar extends HookWidget implements PreferredSizeWidget {
                 width: 16.toWidth,
               ),
               Expanded(
-                  child: ImageAssetWidget(
-                path: LOGO_ASSET,
-                width: 40.toHeight,
-                height: 40.toHeight,
+                  child: InkWell(
+                child: ImageAssetWidget(
+                  path: LOGO_ASSET,
+                  width: 40.toHeight,
+                  height: 40.toHeight,
+                ),
+                onTap: () {
+                  pushReplaceRouteWithName(ROUTE_HOME);
+                },
               ))
             ],
           ),
