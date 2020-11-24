@@ -9,19 +9,13 @@ import 'package:ari_kuryer/utils/size_config.dart';
 import 'image_asset.dart';
 
 class CustomAppBar extends HookWidget implements PreferredSizeWidget {
-  CustomAppBar();
+  final bool hasToken;
+  final Function clearToken;
+
+  CustomAppBar({this.hasToken,this.clearToken});
 
   @override
   Widget build(BuildContext context) {
-    var hasToken = useState<bool>(false);
-    useEffect(() {
-      print("GET TOKEN ${SpUtil.getString('token')}");
-      Future.delayed(const Duration(seconds: 1), () {
-        hasToken.value = SpUtil.getString('token').isEmpty ? false : true;
-      });
-
-      return () {};
-    }, [hasToken.value]);
     // TODO: implement build
     return Stack(
       children: <Widget>[
@@ -34,7 +28,7 @@ class CustomAppBar extends HookWidget implements PreferredSizeWidget {
             children: <Widget>[
               Expanded(
                 flex: 4,
-                child: hasToken.value
+                child: hasToken
                     ? Container(
                         child: Row(
                           children: <Widget>[
@@ -75,8 +69,8 @@ class CustomAppBar extends HookWidget implements PreferredSizeWidget {
                                 ),
                               ),
                               onTap: () {
+                                clearToken.call();
                                 SpUtil.remove('token').then((value) {
-                                  hasToken.value = false;
                                   pushReplaceRouteWithName('/');
                                 });
                               },
