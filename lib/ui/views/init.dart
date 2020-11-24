@@ -47,9 +47,8 @@ class _InitPage extends State<InitPage> {
   void setInstance() async {
     await SpUtil.getInstance();
     initial = SpUtil.getString('token').isEmpty ? null : "/home";
-//    if (initial != null) {
-//      pushReplaceRouteWithName('/home');
-//    }
-    //pushReplaceRouteWithName('/home');
+    if (initial != null) {
+      pushReplaceRouteWithName('/home');
+    }
   }
 }

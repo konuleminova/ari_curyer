@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Air Kuryer',
       theme: ThemeData(
-        fontFamily: 'Bitter-Light',
+        fontFamily: 'Bitter-Regular',
         accentColor: ThemeColor().yellowColor,
         primarySwatch: Colors.amber,
         visualDensity: VisualDensity.adaptivePlatformDensity,
