@@ -8,6 +8,8 @@ import 'package:ari_kuryer/utils/sharedpref/sp_util.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
+//Update curyer coordinates
+
 ApiResponse<Order> useGiveOrder(String coords) {
   final ApiConfig apiConfig = useApiConfig();
   final DioConfig dioConfig = useMemoized(() {

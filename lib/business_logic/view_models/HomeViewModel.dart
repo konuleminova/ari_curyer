@@ -14,7 +14,7 @@ class HomeViewModel extends HookWidget {
     var takeOrderId = useState<String>();
     var giveOrderId = useState<String>();
 
-    var fetchOrderStatusKey = useState<UniqueKey>();
+    var refreshKey = useState<UniqueKey>();
 
     //ASSIGN ORDER
     useAssignOrder(assignOrderId.value);
@@ -25,35 +25,34 @@ class HomeViewModel extends HookWidget {
     //GIVE ORDER
     useGiveOrder(giveOrderId.value);
 
-    //Fetch order status
-    ApiResponse<Order> apiResponse =
-        useFetchOrderStatus(fetchOrderStatusKey.value);
+    //Fetch ORDER
+    ApiResponse<Order> apiResponse = useFetchOrderStatus(refreshKey.value);
 
     //ASSIGN ORDER CALLBACK
     final assignOrderCallback = useCallback((String order) {
       if (order != null) {
         assignOrderId.value = order;
-        fetchOrderStatusKey.value = new UniqueKey();
+        refreshKey.value = new UniqueKey();
       }
 
       return () {};
     }, [assignOrderId.value]);
 
-    //TAKE ORDER
+    //TAKE ORDER CALLBACK
     final takeOrderCallback = useCallback((String order) {
       if (order != null) {
         takeOrderId.value = order;
-        fetchOrderStatusKey.value = new UniqueKey();
+        refreshKey.value = new UniqueKey();
       }
 
       return () {};
     }, [takeOrderId.value]);
 
-    //GIVE ORDER
+    //GIVE ORDER CALLBACK
     final giveOrderCallback = useCallback((String order) {
       if (order != null) {
         giveOrderId.value = order;
-        fetchOrderStatusKey.value = new UniqueKey();
+        refreshKey.value = new UniqueKey();
       }
 
       return () {};
