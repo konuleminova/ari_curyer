@@ -26,7 +26,7 @@ class HomeViewModel extends HookWidget {
     //Timer for update  CURYER COORDINATES
     useEffect(() {
       timer = Timer.periodic(Duration(seconds: 5), (timer) {
-        curyerCoords.value = UniqueKey().toString();
+       // curyerCoords.value = UniqueKey().toString();
       });
       return () {
         timer.cancel();
