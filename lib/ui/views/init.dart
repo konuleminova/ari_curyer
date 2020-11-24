@@ -46,9 +46,12 @@ class _InitPage extends State<InitPage> {
     await SpUtil.getInstance();
     print('TOKEN');
     print(SpUtil.getString('token'));
-//    initial = SpUtil.getString('token').isEmpty ? null : "/home";
-//    if (initial != null) {
-//      pushReplaceRouteWithName('/home');
-//    }
+    initial = SpUtil.getString('token').isEmpty ? null : "/home";
+    if (initial != null) {
+      pushReplaceRouteWithName('/home');
+    }
+    setState(() {
+
+    });
   }
 }
