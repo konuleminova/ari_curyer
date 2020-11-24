@@ -1,13 +1,13 @@
 class Curyer {
   String found;
-  String restid;
+  String userid;
   String name;
   String coords;
   String token;
 
   Curyer.fromJson(Map<String, dynamic> json) {
     found = json['found'];
-    restid = json['restid'];
+    userid = json['userid'];
     name = json['name'];
     coords = json['coords'];
     token = json['token'];

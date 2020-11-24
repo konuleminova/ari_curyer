@@ -13,19 +13,15 @@ class CustomAppBar extends HookWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    var onClickIndex = useState<int>(0);
-    var isLogin = useState<bool>(false);
-
+    var hasToken = useState<bool>(false);
     useEffect(() {
-      // onClickIndex.value = 0;
       print("GET TOKEN ${SpUtil.getString('token')}");
-      Future.delayed(const Duration(seconds: 1), ()
-      {
-        isLogin.value = SpUtil.getString('token').isEmpty ? false : true;
+      Future.delayed(const Duration(seconds: 1), () {
+        hasToken.value = SpUtil.getString('token').isEmpty ? false : true;
       });
 
       return () {};
-    }, [isLogin.value]);
+    }, [hasToken.value]);
     // TODO: implement build
     return Stack(
       children: <Widget>[
@@ -38,7 +34,7 @@ class CustomAppBar extends HookWidget implements PreferredSizeWidget {
             children: <Widget>[
               Expanded(
                 flex: 4,
-                child: isLogin.value
+                child: hasToken.value
                     ? Container(
                         child: Row(
                           children: <Widget>[
@@ -58,7 +54,7 @@ class CustomAppBar extends HookWidget implements PreferredSizeWidget {
                                   SizedBox(
                                     height: 2.toHeight,
                                   ),
-                                  Text('A34005',
+                                  Text('User id: ${SpUtil.getString('userid')}',
                                       style: TextStyle(fontSize: 12.toFont))
                                 ],
                               ),
@@ -80,7 +76,7 @@ class CustomAppBar extends HookWidget implements PreferredSizeWidget {
                               ),
                               onTap: () {
                                 SpUtil.remove('token').then((value) {
-                                  isLogin.value = false;
+                                  hasToken.value = false;
                                   pushReplaceRouteWithName('/');
                                 });
                               },

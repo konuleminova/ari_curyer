@@ -29,12 +29,12 @@ class LoginViewModel extends HookWidget {
       }
     }, [login.value, password.value]);
 
-    ApiResponse<Curyer> apiResponse =
-        useLogin(login?.value, password?.value);
+    ApiResponse<Curyer> apiResponse = useLogin(login?.value, password?.value);
 
     useSideEffect(() {
       if (apiResponse?.data?.token != null) {
         SpUtil.putString('name', apiResponse?.data?.name);
+        SpUtil.putString('userid', apiResponse.data.userid);
         SpUtil.putString('token', apiResponse?.data?.token).then((value) {
           pushRouteWithName('/home');
         });
