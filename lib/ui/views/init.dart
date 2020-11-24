@@ -19,7 +19,6 @@ class InitPage extends StatefulWidget {
 class _InitPage extends State<InitPage> {
   String initial;
 
-
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -49,8 +48,9 @@ class _InitPage extends State<InitPage> {
     print(SpUtil.getString('token'));
     initial = SpUtil.getString('token').isEmpty ? null : "/home";
     if (initial != null) {
-      pushReplaceRouteWithName('/home');
-
+      setState(() {
+        pushReplaceRouteWithName('/home');
+      });
     }
   }
 }

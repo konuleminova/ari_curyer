@@ -19,7 +19,7 @@ class CustomAppBar extends HookWidget implements PreferredSizeWidget {
     useEffect(() {
       // onClickIndex.value = 0;
       print("GET TOKEN ${SpUtil.getString('token')}");
-      isLogin.value = SpUtil.getString('token').isEmpty ? false : true;
+      isLogin.value = SpUtil.getString('token').isEmpty ? false : false;
       return () {};
     }, [isLogin.value]);
     // TODO: implement build
