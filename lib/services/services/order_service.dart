@@ -26,11 +26,12 @@ ApiResponse<Order> useFetchOrderStatus(UniqueKey key) {
 ApiResponse<Order> useAssignOrder(String orderId) {
   final ApiConfig apiConfig = useApiConfig();
   final DioConfig dioConfig = useMemoized(() {
-    if (orderId == null) return null;
-    return DioConfig<Order>(
-        path: apiConfig.ASSIGN_ORDER(orderId, SpUtil.getString('token')),
-        transformResponse: (Response response) =>
-            Order.fromJson(response.data));
+    if (orderId == null)
+      return null;
+      return DioConfig<Order>(
+          path: apiConfig.ASSIGN_ORDER(orderId, SpUtil.getString('token')),
+          transformResponse: (Response response) =>
+              Order.fromJson(response.data));
   }, [orderId]);
   ApiResponse<Order> apiResponse = useDioRequest(dioConfig);
   return apiResponse;

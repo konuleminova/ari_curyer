@@ -59,13 +59,16 @@ class OrderItemWidget extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                if (order.order != null) {
+                //print('ORDER ID ${order.order}');
+                print('ORDER status ${order.status}');
+                if (true) {
                   if (order.status == 'go to rest') {
                     takeOrder(order.order);
                   } else if (order.status == 'go to user') {
                     giveOrder(order.order);
                   } else {
-                    assignOrder(order.order);
+                    print('ORDER assign ${order.status}');
+                    assignOrder('45');
                   }
                 }
               },

@@ -27,6 +27,8 @@ class HomeView extends StatelessWidget {
               : OrderItemWidget(
                   order: order,
                   assignOrder: assignOrder,
+                  takeOrder: takeOrder,
+                  giveOrder: giveOrder,
                 ),
         ],
       ),
