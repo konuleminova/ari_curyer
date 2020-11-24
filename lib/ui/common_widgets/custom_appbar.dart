@@ -9,13 +9,19 @@ import 'package:ari_kuryer/utils/size_config.dart';
 import 'image_asset.dart';
 
 class CustomAppBar extends HookWidget implements PreferredSizeWidget {
+  CustomAppBar();
+
   @override
   Widget build(BuildContext context) {
     var onClickIndex = useState<int>(0);
+    var isLogin = useState<bool>(false);
+
     useEffect(() {
-      onClickIndex.value = 0;
+      // onClickIndex.value = 0;
+      print("GET TOKEN ${SpUtil.getString('token')}");
+      isLogin.value = SpUtil.getString('token').isEmpty ? false : true;
       return () {};
-    }, [onClickIndex]);
+    }, [isLogin.value]);
     // TODO: implement build
     return Stack(
       children: <Widget>[
@@ -28,7 +34,7 @@ class CustomAppBar extends HookWidget implements PreferredSizeWidget {
             children: <Widget>[
               Expanded(
                 flex: 4,
-                child: SpUtil.getString('token').isNotEmpty
+                child: isLogin.value
                     ? Container(
                         child: Row(
                           children: <Widget>[
@@ -69,9 +75,10 @@ class CustomAppBar extends HookWidget implements PreferredSizeWidget {
                                 ),
                               ),
                               onTap: () {
-                                SpUtil.remove('token');
-                                pushReplaceRouteWithName('/');
-
+                                SpUtil.remove('token').then((value) {
+                                  isLogin.value = false;
+                                  pushReplaceRouteWithName('/');
+                                });
                               },
                             )),
                           ],
