@@ -13,15 +13,19 @@ class OrderItemWidget extends StatelessWidget {
       {this.order, this.assignOrder, this.takeOrder, this.giveOrder});
 
   Color statusColor;
+  String statusText;
 
   @override
   Widget build(BuildContext context) {
     if (order.status == 'go to user') {
       statusColor = ThemeColor().blue;
+      statusText = 'TAKE';
     } else if (order.status == 'go to rest') {
       statusColor = ThemeColor().blue.withOpacity(0.5);
+      statusText = 'DONE';
     } else {
       statusColor = ThemeColor().yellowColor;
+      statusText = 'I WANT THIS';
     }
     // TODO: implement build
     return Container(
@@ -51,7 +55,7 @@ class OrderItemWidget extends StatelessWidget {
                     width: 26.toWidth,
                   ),
                   Text(
-                    order.order ?? '934',
+                    order.order ?? '',
                     style: TextStyle(fontWeight: FontWeight.w700),
                   )
                 ],
@@ -83,7 +87,7 @@ class OrderItemWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Text(
-                      "I WANT THIS",
+                      statusText,
                       style: TextStyle(
                           fontSize: 20.toFont,
                           fontWeight: FontWeight.w700,
