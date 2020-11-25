@@ -57,17 +57,6 @@ class HomeViewModel extends HookWidget {
 
     //Fetch ORDER
     ApiResponse<Order> apiResponse = useFetchOrderStatus(refreshKey.value);
-    useEffect(() {
-      if (apiResponse.data == null) {
-        SchedulerBinding.instance.addPostFrameCallback((_) {
-          pushReplaceRouteWithName('/');
-        });
-        if (timer != null) {
-          timer.cancel();
-        }
-      }
-      return () {};
-    }, [apiResponse]);
 
     useEffect(() {
       refreshKey.value = new UniqueKey();
