@@ -19,11 +19,11 @@ class OrderItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     if (order.status == 'go to user') {
       statusColor = ThemeColor().blue;
-      statusText = 'TAKE';
+      statusText = 'DONE';
     } else if (order.status == 'go to rest') {
       statusColor = ThemeColor().blue.withOpacity(0.5);
-      statusText = 'DONE';
-    } else {
+      statusText = 'TAKE';
+    } else if (order.status == 'i want this') {
       statusColor = ThemeColor().yellowColor;
       statusText = 'I WANT THIS';
     }
@@ -63,16 +63,13 @@ class OrderItemWidget extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                //print('ORDER ID ${order.order}');
-                print('ORDER status ${order.status}');
                 if (order.order != null) {
                   if (order.status == 'go to rest') {
                     takeOrder(order.order);
                   } else if (order.status == 'go to user') {
                     giveOrder(order.order);
-                  } else {
-                    print('ORDER assign ${order.status}');
-                    assignOrder('45');
+                  } else if (order.status == 'i want this') {
+                    assignOrder(order.order);
                   }
                 }
               },
