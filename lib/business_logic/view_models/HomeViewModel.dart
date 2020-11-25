@@ -10,6 +10,8 @@ import 'package:ari_kuryer/ui/common_widgets/error_handler.dart';
 import 'package:ari_kuryer/ui/views/home/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:location_permissions/location_permissions.dart';
 
 class HomeViewModel extends HookWidget {
   Timer timer;
@@ -26,7 +28,14 @@ class HomeViewModel extends HookWidget {
     //Timer for update  CURYER COORDINATES
     useEffect(() {
       timer = Timer.periodic(Duration(seconds: 5), (timer) {
-       // curyerCoords.value = UniqueKey().toString();
+        Geolocator.checkPermission().then((value){
+          Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high).then((value) {
+//            print(value.latitude);
+//            print(value.longitude);
+             curyerCoords.value = '${value.latitude},${value.longitude}';
+          });
+        });
+
       });
       return () {
         timer.cancel();
