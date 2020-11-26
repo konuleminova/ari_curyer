@@ -31,15 +31,15 @@ class HomeViewModel extends HookWidget {
     //Timer for update  CURYER COORDINATES
     useEffect(() {
       timer = Timer.periodic(Duration(seconds: 5), (timer) {
-//        if (Platform.isAndroid) {
-//          Geolocator.checkPermission().then((value) {
-//            Geolocator.getCurrentPosition(
-//                    desiredAccuracy: LocationAccuracy.high)
-//                .then((value) {
-//              curyerCoords.value = '${value.latitude},${value.longitude}';
-//            });
-//          });
-//        }
+        if (Platform.isAndroid) {
+          Geolocator.checkPermission().then((value) {
+            Geolocator.getCurrentPosition(
+                    desiredAccuracy: LocationAccuracy.high)
+                .then((value) {
+              curyerCoords.value = '${value.latitude},${value.longitude}';
+            });
+          });
+        }
       });
       return () {
         timer.cancel();
@@ -61,6 +61,9 @@ class HomeViewModel extends HookWidget {
     ApiResponse<Order> apiResponse = useFetchOrderStatus(refreshKey.value);
 
     useEffect(() {
+      if(apiResponse?.data?.status=='i want this'){
+        AudioCache().play("songs/buzz.mp3");
+      }
 
       return () {};
     }, [apiResponse]);
