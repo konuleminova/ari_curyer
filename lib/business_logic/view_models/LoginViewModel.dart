@@ -1,4 +1,5 @@
 import 'package:ari_kuryer/business_logic/models/Curyer.dart';
+import 'package:ari_kuryer/business_logic/models/Order.dart';
 import 'package:ari_kuryer/business_logic/routes/route_navigation.dart';
 import 'package:ari_kuryer/services/api_helper/api_response.dart';
 import 'package:ari_kuryer/services/hooks/useSideEffect.dart';
@@ -31,6 +32,7 @@ class LoginViewModel extends HookWidget {
       if (apiResponse?.data?.token != null) {
         SpUtil.putString('name', apiResponse?.data?.name);
         SpUtil.putString('userid', apiResponse.data.userid);
+        SpUtil.putString('coords', apiResponse.data.coords);
         final Store<TokenState, TokenAction> tokenStore =
             useProvider<Store<TokenState, TokenAction>>();
         tokenStore.dispatch(TokenAction(true));
