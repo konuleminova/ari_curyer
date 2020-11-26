@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:ari_kuryer/utils/map_utils.dart';
 import 'package:ari_kuryer/utils/sharedpref/sp_util.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -73,19 +74,24 @@ class GoogleMapView extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Container(
-                          width: 90.toWidth,
-                          height: 44.toHeight,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(4)),
-                          child: Center(
-                            child: Text(
-                              'Open in MAPS',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(fontWeight: FontWeight.w400),
-                            ),
-                          )),
+                      InkWell(
+                        child: Container(
+                            width: 90.toWidth,
+                            height: 44.toHeight,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(4)),
+                            child: Center(
+                              child: Text(
+                                'Open in MAPS',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontWeight: FontWeight.w400),
+                              ),
+                            )),
+                        onTap: (){
+                          MapUtils.openMap(37.43296265331129, -122.08832357078792);
+                        },
+                      )
                     ],
                   )),
             )
