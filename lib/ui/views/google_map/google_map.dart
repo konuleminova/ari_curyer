@@ -31,7 +31,7 @@ class GoogleMapView extends StatelessWidget {
               left: 0,
               right: 0,
               child: Container(
-                  height: 44.toHeight,
+                  height: 70.toHeight,
                   padding: EdgeInsets.all(16.toWidth),
                   color: Colors.black.withOpacity(0.4),
                   child: Row(
@@ -42,22 +42,27 @@ class GoogleMapView extends StatelessWidget {
                           children: <Widget>[
                             Text(
                               'Name Surname',
-                              style: TextStyle(color: Colors.white),
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14.toFont,
+                                  fontWeight: FontWeight.w500),
                             ),
                             SizedBox(
                               height: 4.toHeight,
                             ),
-                            Text(
-                              'Address',
-                              style: TextStyle(color: Colors.white),
+                            Expanded(
+                              child: Text(
+                                'Address',
+                                style: TextStyle(color: Colors.white),
+                              ),
                             )
                           ],
                           crossAxisAlignment: CrossAxisAlignment.start,
                         ),
                       ),
                       Container(
-                          width: 60.toWidth,
-                          height: 24.toHeight,
+                          width: 90.toWidth,
+                          height: 44.toHeight,
                           decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(4)),
@@ -65,6 +70,7 @@ class GoogleMapView extends StatelessWidget {
                             child: Text(
                               'Open in MAPS',
                               textAlign: TextAlign.center,
+                              style: TextStyle(fontWeight: FontWeight.w400),
                             ),
                           ))
                     ],

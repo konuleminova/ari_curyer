@@ -1,4 +1,5 @@
 import 'package:ari_kuryer/business_logic/models/Order.dart';
+import 'package:ari_kuryer/ui/views/google_map/google_map.dart';
 import 'package:ari_kuryer/ui/views/home/widgets/order_item.dart';
 import 'package:ari_kuryer/utils/size_config.dart';
 import 'package:ari_kuryer/utils/theme_color.dart';
@@ -33,6 +34,7 @@ class HomeView extends StatelessWidget {
                   takeOrder: takeOrder,
                   giveOrder: giveOrder,
                 ),
+        Expanded(child:   GoogleMapView(),)
         ],
       ),
       height: SizeConfig().screenHeight,
