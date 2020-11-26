@@ -79,6 +79,7 @@ class HomeViewModel extends HookWidget {
     final assignOrderCallback = useCallback((String order) {
       if (order != null) {
         assignOrderId.value = order;
+        refreshKey.value=new UniqueKey();
       }
 
       return () {};
@@ -88,6 +89,7 @@ class HomeViewModel extends HookWidget {
     final takeOrderCallback = useCallback((String order) {
       if (order != null) {
         takeOrderId.value = order;
+        refreshKey.value=new UniqueKey();
       }
 
       return () {};
@@ -97,6 +99,7 @@ class HomeViewModel extends HookWidget {
     final giveOrderCallback = useCallback((String order) {
       if (order != null) {
         giveOrderId.value = order;
+        refreshKey.value=new UniqueKey();
       }
 
       return () {};

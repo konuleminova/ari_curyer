@@ -29,7 +29,7 @@ class OrderItemWidget extends StatelessWidget {
     }
     // TODO: implement build
     return Container(
-        height: 180.toHeight,
+        height: 200.toHeight,
         margin: EdgeInsets.all(16),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
@@ -77,7 +77,7 @@ class OrderItemWidget extends StatelessWidget {
                 margin: EdgeInsets.all(16),
                 padding: EdgeInsets.all(16.toWidth),
                 width: SizeConfig().screenHeight,
-                height: 44.toHeight,
+                height: 54.toHeight,
                 color: statusColor,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

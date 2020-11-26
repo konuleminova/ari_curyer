@@ -8,11 +8,15 @@ import 'package:ari_kuryer/utils/size_config.dart';
 class GoogleMapView extends StatelessWidget {
   Completer<GoogleMapController> _controller = Completer();
   double lat, lng;
+  final String coords;
+  final String name;
+  String address;
+
+  GoogleMapView({this.coords, this.name, this.address});
 
   @override
   Widget build(BuildContext context) {
-    String coords = SpUtil.getString('coords');
-    var split = coords.split(",");
+    var split = coords.trim().split(",");
     lat = double.parse(split[0]);
     lng = double.parse(split[1]);
 
@@ -53,7 +57,7 @@ class GoogleMapView extends StatelessWidget {
                       borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(10),
                           bottomRight: Radius.circular(10))),
-                  height: 70.toHeight,
+                  height: 80.toHeight,
                   padding: EdgeInsets.all(16.toWidth),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -64,7 +68,7 @@ class GoogleMapView extends StatelessWidget {
                           child: Column(
                             children: <Widget>[
                               Text(
-                                SpUtil.getString('name'),
+                                name ?? '',
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 14.toFont,
@@ -75,10 +79,10 @@ class GoogleMapView extends StatelessWidget {
                               ),
                               Expanded(
                                   child: Text(
-                                'Address: ${SpUtil.getString('coords')}',
+                                'Address: ${address ?? ''}',
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 12.toFont,
+                                  fontSize: 11.toFont,
                                 ),
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
@@ -88,6 +92,7 @@ class GoogleMapView extends StatelessWidget {
                           ),
                         ),
                       ),
+                      SizedBox(width: 8.toWidth,),
                       InkWell(
                         child: Container(
                             width: 90.toWidth,
