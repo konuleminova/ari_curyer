@@ -7,9 +7,18 @@ import 'package:ari_kuryer/utils/size_config.dart';
 
 class GoogleMapView extends StatelessWidget {
   Completer<GoogleMapController> _controller = Completer();
+  double lat, lng;
 
   @override
   Widget build(BuildContext context) {
+    String coords = SpUtil.getString('coords');
+    var split=coords.split(",");
+    lat = double.parse(split[0]);
+    lng = double.parse(split[1]);
+
+    print('LAT ${split[0]}');
+    print('LNG ${split[1]}');
+
     // TODO: implement build
     return Container(
         margin: EdgeInsets.only(
@@ -22,9 +31,8 @@ class GoogleMapView extends StatelessWidget {
                     bottomRight: Radius.circular(10)),
                 child: GoogleMap(
                   mapType: MapType.normal,
-                  initialCameraPosition: CameraPosition(
-                      target: LatLng(37.43296265331129, -122.08832357078792),
-                      zoom: 18),
+                  initialCameraPosition:
+                      CameraPosition(target: LatLng(lat, lng), zoom: 13),
                   onMapCreated: (GoogleMapController googleMapController) {
                     _controller.complete(googleMapController);
                   },
@@ -88,8 +96,8 @@ class GoogleMapView extends StatelessWidget {
                                 style: TextStyle(fontWeight: FontWeight.w400),
                               ),
                             )),
-                        onTap: (){
-                          MapUtils.openMap(37.43296265331129, -122.08832357078792);
+                        onTap: () {
+                          MapUtils.openMap(lat, lng);
                         },
                       )
                     ],
