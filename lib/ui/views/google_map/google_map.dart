@@ -10,7 +10,7 @@ class GoogleMapView extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Container(
-        margin: EdgeInsets.all(16.toWidth),
+        margin: EdgeInsets.only(left: 16.toWidth,right: 16.toWidth,bottom: 16.toWidth),
         child: Stack(
           children: <Widget>[
             ClipRRect(

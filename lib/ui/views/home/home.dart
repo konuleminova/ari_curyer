@@ -17,28 +17,41 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Container(
-      child: Column(
-        children: <Widget>[
-          order.status == 'waiting'
-              ? Container(
-                  margin: EdgeInsets.only(top: 16.toHeight),
-                  child: Text(
-                    'You have no order.',
-                    style: TextStyle(fontWeight: FontWeight.w500),
-                  ),
+    return order?.status != null
+        ? Container(
+            child: Column(
+              children: <Widget>[
+                order.status == 'waiting'
+                    ? Container(
+                        margin: EdgeInsets.only(
+                            top: 16.toHeight, bottom: 16.toHeight),
+                        child: Text(
+                          'You have no order.',
+                          style: TextStyle(fontWeight: FontWeight.w500),
+                        ),
+                      )
+                    : OrderItemWidget(
+                        order: order,
+                        assignOrder: assignOrder,
+                        takeOrder: takeOrder,
+                        giveOrder: giveOrder,
+                      ),
+                Expanded(
+                  child: GoogleMapView(),
                 )
-              : OrderItemWidget(
-                  order: order,
-                  assignOrder: assignOrder,
-                  takeOrder: takeOrder,
-                  giveOrder: giveOrder,
-                ),
-        Expanded(child:   GoogleMapView(),)
-        ],
-      ),
-      height: SizeConfig().screenHeight,
-      width: SizeConfig().screenWidth,
-    );
+              ],
+            ),
+            height: SizeConfig().screenHeight,
+            width: SizeConfig().screenWidth,
+          )
+        : Container(
+            child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            child: Text(
+              'Your account is used someone else.\nLog out and Login again..',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontWeight: FontWeight.w500),
+            ),
+          ));
   }
 }

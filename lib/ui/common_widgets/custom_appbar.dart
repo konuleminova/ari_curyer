@@ -105,5 +105,5 @@ class CustomAppBar extends HookWidget implements PreferredSizeWidget {
 //final AppBar appBar=
   @override
   // TODO: implement preferredSize
-  Size get preferredSize => Size.fromHeight(50.toHeight);
+  Size get preferredSize => Size.fromHeight(54.toHeight);
 }

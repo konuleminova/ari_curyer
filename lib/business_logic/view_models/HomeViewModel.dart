@@ -30,15 +30,15 @@ class HomeViewModel extends HookWidget {
     //Timer for update  CURYER COORDINATES
     useEffect(() {
       timer = Timer.periodic(Duration(seconds: 5), (timer) {
-        if (Platform.isAndroid) {
-          Geolocator.checkPermission().then((value) {
-            Geolocator.getCurrentPosition(
-                    desiredAccuracy: LocationAccuracy.high)
-                .then((value) {
-              curyerCoords.value = '${value.latitude},${value.longitude}';
-            });
-          });
-        }
+//        if (Platform.isAndroid) {
+//          Geolocator.checkPermission().then((value) {
+//            Geolocator.getCurrentPosition(
+//                    desiredAccuracy: LocationAccuracy.high)
+//                .then((value) {
+//              curyerCoords.value = '${value.latitude},${value.longitude}';
+//            });
+//          });
+//        }
       });
       return () {
         timer.cancel();
@@ -103,22 +103,12 @@ class HomeViewModel extends HookWidget {
     }, [giveOrderId.value]);
 
     return CustomErrorHandler(
-      child: apiResponse.data?.status != null
-          ? HomeView(
+      child:  HomeView(
               order: apiResponse?.data,
               assignOrder: assignOrderCallback,
               takeOrder: takeOrderCallback,
               giveOrder: giveOrderCallback,
-            )
-          : Container(
-              child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-              child: Text(
-                'Your account is used someone else.\nLog out and Login again..',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontWeight: FontWeight.w500),
-              ),
-            )),
+            ),
       statuses: [apiResponse.status],
       errors: [apiResponse.error],
     );
