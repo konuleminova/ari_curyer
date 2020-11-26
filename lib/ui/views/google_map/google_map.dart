@@ -12,7 +12,7 @@ class GoogleMapView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String coords = SpUtil.getString('coords');
-    var split=coords.split(",");
+    var split = coords.split(",");
     lat = double.parse(split[0]);
     lng = double.parse(split[1]);
 
@@ -30,6 +30,12 @@ class GoogleMapView extends StatelessWidget {
                     bottomLeft: Radius.circular(10),
                     bottomRight: Radius.circular(10)),
                 child: GoogleMap(
+                  markers: Set<Marker>()
+                    ..add(Marker(
+                        markerId: MarkerId(
+                          SpUtil.getString('coords'),
+                        ),
+                        position: LatLng(lat, lng))),
                   mapType: MapType.normal,
                   initialCameraPosition:
                       CameraPosition(target: LatLng(lat, lng), zoom: 13),
