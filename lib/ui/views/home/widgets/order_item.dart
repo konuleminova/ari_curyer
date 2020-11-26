@@ -29,7 +29,7 @@ class OrderItemWidget extends StatelessWidget {
     }
     // TODO: implement build
     return Container(
-        height: 200.toHeight,
+        height: 220.toHeight,
         margin: EdgeInsets.all(16),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
@@ -40,46 +40,51 @@ class OrderItemWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Container(
-              padding: EdgeInsets.all(24.toWidth),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Expanded(
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: order.foods.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Container(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  "${index+1}. ${order.foods[index].data.name ?? ''}",
-                                  style: TextStyle(
-                                      fontSize: 13.toFont,
-                                      fontWeight: FontWeight.w500),
-                                  maxLines: 3,
-                                ),
-                                SizedBox(
-                                  height: 4.toHeight,
-                                ),
-                                Text(
-                                  order.foods[index].data.information ?? '',
-                                  style: TextStyle(fontSize: 11.toFont),
-                                )
-                              ],
-                            ));
-                          })),
-                  SizedBox(
-                    width: 26.toWidth,
-                  ),
-                  Text(
-                    order.order ?? '',
-                    style: TextStyle(fontWeight: FontWeight.w700),
-                  )
-                ],
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.all(24.toWidth),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Expanded(
+                        child: ListView.builder(
+                            shrinkWrap: true,
+                            // physics: NeverScrollableScrollPhysics(),
+                            itemCount: order.foods.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Container(
+                                  margin: EdgeInsets.only(bottom: 4.toHeight),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        "${index + 1}. ${order.foods[index].data.name ?? ''}",
+                                        style: TextStyle(
+                                            fontSize: 13.toFont,
+                                            fontWeight: FontWeight.w500),
+                                        maxLines: 3,
+                                      ),
+                                      SizedBox(
+                                        height: 4.toHeight,
+                                      ),
+                                      Text(
+                                        order.foods[index].data.information ?? '',
+                                        style: TextStyle(fontSize: 11.toFont),
+                                      )
+                                    ],
+                                  ));
+                            })),
+                    SizedBox(
+                      width: 26.toWidth,
+                    ),
+                    Text(
+                      order.order ?? '',
+                      style: TextStyle(fontWeight: FontWeight.w700),
+                    )
+                  ],
+                ),
               ),
             ),
             InkWell(
@@ -95,7 +100,11 @@ class OrderItemWidget extends StatelessWidget {
                 }
               },
               child: Container(
-                margin: EdgeInsets.all(16),
+                margin: EdgeInsets.only(
+                  left: 16,
+                  right: 16,
+                  bottom: 16,
+                ),
                 padding: EdgeInsets.all(16.toWidth),
                 width: SizeConfig().screenHeight,
                 height: 54.toHeight,
@@ -116,10 +125,13 @@ class OrderItemWidget extends StatelessWidget {
                     SizedBox(
                       width: 4.toWidth,
                     ),
-                    Image.asset('assets/images/done.png',
-                        color: statusColor == ThemeColor().yellowColor
-                            ? Colors.black
-                            : Colors.white,height: 19.toHeight,)
+                    Image.asset(
+                      'assets/images/done.png',
+                      color: statusColor == ThemeColor().yellowColor
+                          ? Colors.black
+                          : Colors.white,
+                      height: 19.toHeight,
+                    )
                   ],
                 ),
               ),
