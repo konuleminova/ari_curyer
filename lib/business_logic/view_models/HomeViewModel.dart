@@ -9,6 +9,7 @@ import 'package:ari_kuryer/services/services/update_coords.dart';
 import 'package:ari_kuryer/ui/common_widgets/error_handler.dart';
 import 'package:ari_kuryer/ui/views/home/home.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:geolocator/geolocator.dart';
@@ -102,12 +103,22 @@ class HomeViewModel extends HookWidget {
     }, [giveOrderId.value]);
 
     return CustomErrorHandler(
-      child: HomeView(
-        order: (apiResponse.data),
-        assignOrder: assignOrderCallback,
-        takeOrder: takeOrderCallback,
-        giveOrder: giveOrderCallback,
-      ),
+      child: apiResponse.data?.status != null
+          ? HomeView(
+              order: apiResponse?.data,
+              assignOrder: assignOrderCallback,
+              takeOrder: takeOrderCallback,
+              giveOrder: giveOrderCallback,
+            )
+          : Container(
+              child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              child: Text(
+                'Your account is used someone else.\nLog out and Login again..',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontWeight: FontWeight.w500),
+              ),
+            )),
       statuses: [apiResponse.status],
       errors: [apiResponse.error],
     );
