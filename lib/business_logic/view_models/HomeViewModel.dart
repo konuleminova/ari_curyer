@@ -31,15 +31,15 @@ class HomeViewModel extends HookWidget {
     //Timer for update  CURYER COORDINATES
     useEffect(() {
       timer = Timer.periodic(Duration(seconds: 5), (timer) {
-        if (Platform.isAndroid) {
-          Geolocator.checkPermission().then((value) {
-            Geolocator.getCurrentPosition(
-                    desiredAccuracy: LocationAccuracy.high)
-                .then((value) {
-              curyerCoords.value = '${value.latitude},${value.longitude}';
-            });
-          });
-        }
+//        if (Platform.isAndroid) {
+//          Geolocator.checkPermission().then((value) {
+//            Geolocator.getCurrentPosition(
+//                    desiredAccuracy: LocationAccuracy.high)
+//                .then((value) {
+//              curyerCoords.value = '${value.latitude},${value.longitude}';
+//            });
+//          });
+//        }
       });
       return () {
         timer.cancel();

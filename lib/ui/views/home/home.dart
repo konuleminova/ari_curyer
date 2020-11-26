@@ -50,7 +50,7 @@ class HomeView extends StatelessWidget {
                               ? order.user_address ?? ''
                               : order.rest_address ?? '',
                         )
-                      : SizedBox(),
+                      : SizedBox()
                 )
               ],
             ),

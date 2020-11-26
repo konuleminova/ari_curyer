@@ -25,7 +25,7 @@ class Order {
     rest_name = json['rest_name'];
     user_name = json['user_name'];
     rest_address = json['rest_address'];
-    foods = listFoodFromJson(json['foods']);
+    foods = json['foods']!=null?listFoodFromJson(json['foods']):null;
   }
 }
 
