@@ -37,6 +37,7 @@ dependencies:
   location_permissions: ^3.0.0+1
   google_maps_flutter: ^0.5.30
   url_launcher: ^5.7.6
+  audioplayers: ^0.17.0
 
 dev_dependencies:
   flutter_test:
@@ -59,6 +60,7 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - assets/images/
+    - assets/songs/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

@@ -46,11 +46,32 @@ class OrderItemWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Expanded(
-                    child: Text(
-                      "TOMAT ŞORBASI 1 POLLO CON GORGONZOLA 5 BRUSCHETTA",
-                      maxLines: 3,
-                    ),
-                  ),
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: order.foods.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Container(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  "${index+1}. ${order.foods[index].data.name ?? ''}",
+                                  style: TextStyle(
+                                      fontSize: 13.toFont,
+                                      fontWeight: FontWeight.w500),
+                                  maxLines: 3,
+                                ),
+                                SizedBox(
+                                  height: 4.toHeight,
+                                ),
+                                Text(
+                                  order.foods[index].data.information ?? '',
+                                  style: TextStyle(fontSize: 11.toFont),
+                                )
+                              ],
+                            ));
+                          })),
                   SizedBox(
                     width: 26.toWidth,
                   ),
@@ -86,7 +107,7 @@ class OrderItemWidget extends StatelessWidget {
                     Text(
                       statusText,
                       style: TextStyle(
-                          fontSize: 20.toFont,
+                          fontSize: 19.toFont,
                           fontWeight: FontWeight.w700,
                           color: statusColor == ThemeColor().yellowColor
                               ? Colors.black
@@ -98,7 +119,7 @@ class OrderItemWidget extends StatelessWidget {
                     Image.asset('assets/images/done.png',
                         color: statusColor == ThemeColor().yellowColor
                             ? Colors.black
-                            : Colors.white)
+                            : Colors.white,height: 19.toHeight,)
                   ],
                 ),
               ),

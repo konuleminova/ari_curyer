@@ -8,6 +8,7 @@ import 'package:ari_kuryer/services/services/order_service.dart';
 import 'package:ari_kuryer/services/services/update_coords.dart';
 import 'package:ari_kuryer/ui/common_widgets/error_handler.dart';
 import 'package:ari_kuryer/ui/views/home/home.dart';
+import 'package:audioplayers/audio_cache.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -30,15 +31,15 @@ class HomeViewModel extends HookWidget {
     //Timer for update  CURYER COORDINATES
     useEffect(() {
       timer = Timer.periodic(Duration(seconds: 5), (timer) {
-        if (Platform.isAndroid) {
-          Geolocator.checkPermission().then((value) {
-            Geolocator.getCurrentPosition(
-                    desiredAccuracy: LocationAccuracy.high)
-                .then((value) {
-              curyerCoords.value = '${value.latitude},${value.longitude}';
-            });
-          });
-        }
+//        if (Platform.isAndroid) {
+//          Geolocator.checkPermission().then((value) {
+//            Geolocator.getCurrentPosition(
+//                    desiredAccuracy: LocationAccuracy.high)
+//                .then((value) {
+//              curyerCoords.value = '${value.latitude},${value.longitude}';
+//            });
+//          });
+//        }
       });
       return () {
         timer.cancel();
@@ -60,6 +61,11 @@ class HomeViewModel extends HookWidget {
     ApiResponse<Order> apiResponse = useFetchOrderStatus(refreshKey.value);
 
     useEffect(() {
+
+      return () {};
+    }, [apiResponse]);
+
+    useEffect(() {
       refreshKey.value = new UniqueKey();
 
       return () {};
@@ -79,7 +85,7 @@ class HomeViewModel extends HookWidget {
     final assignOrderCallback = useCallback((String order) {
       if (order != null) {
         assignOrderId.value = order;
-        refreshKey.value=new UniqueKey();
+        refreshKey.value = new UniqueKey();
       }
 
       return () {};
@@ -89,7 +95,7 @@ class HomeViewModel extends HookWidget {
     final takeOrderCallback = useCallback((String order) {
       if (order != null) {
         takeOrderId.value = order;
-        refreshKey.value=new UniqueKey();
+        refreshKey.value = new UniqueKey();
       }
 
       return () {};
@@ -99,19 +105,19 @@ class HomeViewModel extends HookWidget {
     final giveOrderCallback = useCallback((String order) {
       if (order != null) {
         giveOrderId.value = order;
-        refreshKey.value=new UniqueKey();
+        refreshKey.value = new UniqueKey();
       }
 
       return () {};
     }, [giveOrderId.value]);
 
     return CustomErrorHandler(
-      child:  HomeView(
-              order: apiResponse?.data,
-              assignOrder: assignOrderCallback,
-              takeOrder: takeOrderCallback,
-              giveOrder: giveOrderCallback,
-            ),
+      child: HomeView(
+        order: apiResponse?.data,
+        assignOrder: assignOrderCallback,
+        takeOrder: takeOrderCallback,
+        giveOrder: giveOrderCallback,
+      ),
       statuses: [apiResponse.status],
       errors: [apiResponse.error],
     );
