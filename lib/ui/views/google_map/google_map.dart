@@ -11,29 +11,34 @@ class GoogleMapView extends StatelessWidget {
     // TODO: implement build
     return Container(
         margin: EdgeInsets.all(16.toWidth),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(20),
-                bottomRight: Radius.circular(20))),
         child: Stack(
           children: <Widget>[
-            GoogleMap(
-              mapType: MapType.normal,
-              initialCameraPosition: CameraPosition(
-                  target: LatLng(37.43296265331129, -122.08832357078792),
-                  zoom: 18),
-              onMapCreated: (GoogleMapController googleMapController) {
-                _controller.complete(googleMapController);
-              },
-            ),
+            ClipRRect(
+                borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10)),
+                child: GoogleMap(
+                  mapType: MapType.normal,
+                  initialCameraPosition: CameraPosition(
+                      target: LatLng(37.43296265331129, -122.08832357078792),
+                      zoom: 18),
+                  onMapCreated: (GoogleMapController googleMapController) {
+                    _controller.complete(googleMapController);
+                  },
+                )),
             Positioned(
               bottom: 0,
               left: 0,
               right: 0,
               child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.4),
+                      borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(10),
+                          bottomRight: Radius.circular(10))),
                   height: 70.toHeight,
                   padding: EdgeInsets.all(16.toWidth),
-                  color: Colors.black.withOpacity(0.4),
+
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
