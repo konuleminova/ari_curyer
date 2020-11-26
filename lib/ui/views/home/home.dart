@@ -37,7 +37,9 @@ class HomeView extends StatelessWidget {
                         giveOrder: giveOrder,
                       ),
                 Expanded(
-                  child: GoogleMapView(),
+                  child: order.status == 'go to user'
+                      ? GoogleMapView()
+                      : SizedBox(),
                 )
               ],
             ),
