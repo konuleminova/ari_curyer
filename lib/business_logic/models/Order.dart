@@ -1,3 +1,18 @@
+class OrderList {
+  int found;
+  List<Order> order;
+  String message;
+
+  OrderList.fromJson(Map<String, dynamic> json) {
+    found = json['found'];
+    order = json['data'] != 'waiting'|| json['error']=='1'? listOrdersFromJson(json['data']) : [];
+    message = json['data'] == 'waiting' ? json['data'] : json['error']=='1'?json['message']:null;
+  }
+}
+
+listOrdersFromJson(List<dynamic> orders) =>
+    List<Order>.from(orders.map((e) => Order.fromJson(e)));
+
 class Order {
   String message;
   String done;
@@ -25,7 +40,7 @@ class Order {
     rest_name = json['rest_name'];
     user_name = json['user_name'];
     rest_address = json['rest_address'];
-    foods = json['foods']!=null?listFoodFromJson(json['foods']):null;
+    foods = json['foods'] != null ? listFoodFromJson(json['foods']) : null;
   }
 }
 
@@ -49,7 +64,7 @@ class Data {
 }
 
 class Food {
-  int count;
+  var count;
   Data data;
 
   Food.fromJson(Map<String, dynamic> json) {

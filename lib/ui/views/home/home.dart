@@ -6,57 +6,65 @@ import 'package:ari_kuryer/utils/theme_color.dart';
 import 'package:flutter/material.dart';
 
 class HomeView extends StatelessWidget {
-  final Order order;
+  final List<Order> orders;
   final Function(String orderId) assignOrder;
   final Function(String orderId) takeOrder;
   final Function(String orderId) giveOrder;
 
-  HomeView({this.order, this.assignOrder, this.giveOrder, this.takeOrder});
+  HomeView({this.orders, this.assignOrder, this.giveOrder, this.takeOrder});
 
 //
   @override
   Widget build(BuildContext context) {
+    print('ORDERS lenth ${orders.length}');
     // TODO: implement build
-    return order?.status != null
-        ? Container(
-            child: Column(
-              children: <Widget>[
-                order.status == 'waiting'
-                    ? Container(
-                        margin: EdgeInsets.only(
-                            top: 16.toHeight, bottom: 16.toHeight),
-                        child: Text(
-                          'You have no order.',
-                          style: TextStyle(fontWeight: FontWeight.w500),
+    return orders != null
+        ? orders.length < 1
+            ? Center(
+                child: Container(
+                  margin:
+                      EdgeInsets.only(top: 16.toHeight, bottom: 16.toHeight),
+                  child: Text(
+                    'You have no order.',
+                    style: TextStyle(fontWeight: FontWeight.w500),
+                  ),
+                ),
+              )
+            : ListView.builder(
+                shrinkWrap: true,
+                itemCount: orders.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Container(
+                    child: Column(
+                      children: <Widget>[
+                        OrderItemWidget(
+                          order: orders[index],
+                          assignOrder: assignOrder,
+                          takeOrder: takeOrder,
+                          giveOrder: giveOrder,
                         ),
-                      )
-                    : OrderItemWidget(
-                        order: order,
-                        assignOrder: assignOrder,
-                        takeOrder: takeOrder,
-                        giveOrder: giveOrder,
-                      ),
-                Expanded(
-                  child: order.status == 'go to user' ||
-                          order.status == 'go to rest'
-                      ? GoogleMapView(
-                          coords: order.status == 'go to user'
-                              ? order.user_coords
-                              : order.rest_coords,
-                          name: order.status == 'go to user'
-                              ? order.user_name ?? ''
-                              : order.rest_name ?? '',
-                          address: order.status == 'go to user'
-                              ? order.user_address ?? ''
-                              : order.rest_address ?? '',
-                        )
-                      : SizedBox()
-                )
-              ],
-            ),
-            height: SizeConfig().screenHeight,
-            width: SizeConfig().screenWidth,
-          )
+                        orders[index].status == 'go to user' ||
+                                orders[index].status == 'go to rest'
+                            ? Container(
+                                height: 250.toHeight,
+                                child: GoogleMapView(
+                                  coords: orders[index].status == 'go to user'
+                                      ? orders[index].user_coords
+                                      : orders[index].rest_coords,
+                                  name: orders[index].status == 'go to user'
+                                      ? orders[index].user_name ?? ''
+                                      : orders[index].rest_name ?? '',
+                                  address: orders[index].status == 'go to user'
+                                      ? orders[index].user_address ?? ''
+                                      : orders[index].rest_address ?? '',
+                                ))
+                            : SizedBox()
+                      ],
+                    ),
+                    //height: SizeConfig().screenHeight,
+                    //width: SizeConfig().screenWidth,
+                  );
+                })
         : Container(
             child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),

@@ -9,58 +9,58 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-//Get order status
-ApiResponse<Order> useFetchOrderStatus(UniqueKey key) {
+//Get OrderList status
+ApiResponse<OrderList> useFetchOrderListStatus(UniqueKey key) {
   final ApiConfig apiConfig = useApiConfig();
   final DioConfig dioConfig = useMemoized(
-      () => DioConfig<Order>(
+      () => DioConfig<OrderList>(
           path: apiConfig.FETCH_ORDER_STATUS(SpUtil.getString('token')),
           transformResponse: (Response response) =>
-              Order.fromJson(response.data)),
+              OrderList.fromJson(response.data)),
       [key]);
-  ApiResponse<Order> apiResponse = useDioRequest(dioConfig);
+  ApiResponse<OrderList> apiResponse = useDioRequest(dioConfig);
   return apiResponse;
 }
 
-//Assign order
-ApiResponse<Order> useAssignOrder(String orderId) {
+//Assign OrderList
+ApiResponse<OrderList> useAssignOrderList(String OrderListId) {
   final ApiConfig apiConfig = useApiConfig();
   final DioConfig dioConfig = useMemoized(() {
-    if (orderId == null)
+    if (OrderListId == null)
       return null;
-      return DioConfig<Order>(
-          path: apiConfig.ASSIGN_ORDER(orderId, SpUtil.getString('token')),
+      return DioConfig<OrderList>(
+          path: apiConfig.ASSIGN_ORDER(OrderListId, SpUtil.getString('token')),
           transformResponse: (Response response) =>
-              Order.fromJson(response.data));
-  }, [orderId]);
-  ApiResponse<Order> apiResponse = useDioRequest(dioConfig);
+              OrderList.fromJson(response.data));
+  }, [OrderListId]);
+  ApiResponse<OrderList> apiResponse = useDioRequest(dioConfig);
   return apiResponse;
 }
 
-//Take order
-ApiResponse<Order> useTakeOrder(String orderId) {
+//Take OrderList
+ApiResponse<OrderList> useTakeOrderList(String OrderListId) {
   final ApiConfig apiConfig = useApiConfig();
   final DioConfig dioConfig = useMemoized(() {
-    if (orderId == null) return null;
-    return DioConfig<Order>(
-        path: apiConfig.TAKE_ORDER(orderId, SpUtil.getString('token')),
+    if (OrderListId == null) return null;
+    return DioConfig<OrderList>(
+        path: apiConfig.TAKE_ORDER(OrderListId, SpUtil.getString('token')),
         transformResponse: (Response response) =>
-            Order.fromJson(response.data));
-  }, [orderId]);
-  ApiResponse<Order> apiResponse = useDioRequest(dioConfig);
+            OrderList.fromJson(response.data));
+  }, [OrderListId]);
+  ApiResponse<OrderList> apiResponse = useDioRequest(dioConfig);
   return apiResponse;
 }
 
-//Give order
-ApiResponse<Order> useGiveOrder(String orderId) {
+//Give OrderList
+ApiResponse<OrderList> useGiveOrderList(String OrderListId) {
   final ApiConfig apiConfig = useApiConfig();
   final DioConfig dioConfig = useMemoized(() {
-    if (orderId == null) return null;
-    return DioConfig<Order>(
-        path: apiConfig.GIVE_ORDER(orderId, SpUtil.getString('token')),
+    if (OrderListId == null) return null;
+    return DioConfig<OrderList>(
+        path: apiConfig.GIVE_ORDER(OrderListId, SpUtil.getString('token')),
         transformResponse: (Response response) =>
-            Order.fromJson(response.data));
-  }, [orderId]);
-  ApiResponse<Order> apiResponse = useDioRequest(dioConfig);
+            OrderList.fromJson(response.data));
+  }, [OrderListId]);
+  ApiResponse<OrderList> apiResponse = useDioRequest(dioConfig);
   return apiResponse;
 }

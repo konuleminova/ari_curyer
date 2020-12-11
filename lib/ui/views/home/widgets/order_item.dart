@@ -57,7 +57,7 @@ class OrderItemWidget extends StatelessWidget {
                                   margin: EdgeInsets.only(bottom: 4.toHeight),
                                   child: Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Text(
                                         "${index + 1}. ${order.foods[index].data.name ?? ''}",

@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:ari_kuryer/business_logic/models/Order.dart';
-import 'package:ari_kuryer/business_logic/routes/route_navigation.dart';
 import 'package:ari_kuryer/services/api_helper/api_response.dart';
 import 'package:ari_kuryer/services/hooks/use_callback.dart';
 import 'package:ari_kuryer/services/services/order_service.dart';
@@ -11,10 +10,9 @@ import 'package:ari_kuryer/ui/views/home/home.dart';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:location_permissions/location_permissions.dart';
+import 'package:ari_kuryer/utils/size_config.dart';
 
 class HomeViewModel extends HookWidget {
   Timer timer;
@@ -49,20 +47,27 @@ class HomeViewModel extends HookWidget {
     useUpdateCuryerCoords(curyerCoords.value);
 
     //ASSIGN ORDER
-    ApiResponse<Order> assignResponse = useAssignOrder(assignOrderId.value);
+    ApiResponse<OrderList> assignResponse =
+        useAssignOrderList(assignOrderId.value);
 
     //TAKE ORDER
-    ApiResponse<Order> takeResponse = useTakeOrder(takeOrderId.value);
+    ApiResponse<OrderList> takeResponse = useTakeOrderList(takeOrderId.value);
 
     //GIVE ORDER
-    ApiResponse<Order> giveResponse = useGiveOrder(giveOrderId.value);
+    ApiResponse<OrderList> giveResponse = useGiveOrderList(giveOrderId.value);
 
     //Fetch ORDER
-    ApiResponse<Order> apiResponse = useFetchOrderStatus(refreshKey.value);
+    ApiResponse<OrderList> apiResponse =
+        useFetchOrderListStatus(refreshKey.value);
 
     useEffect(() {
-      if(apiResponse?.data?.status=='i want this'){
-        AudioCache().play("songs/buzz.mp3");
+      if (apiResponse.status == Status.Done) {
+        for (int i = 0; i < apiResponse?.data.found; i++) {
+          if (apiResponse?.data.order[i].status == 'i want this') {
+            AudioCache().play("songs/buzz.mp3");
+          }
+          break;
+        }
       }
 
       return () {};
@@ -115,12 +120,27 @@ class HomeViewModel extends HookWidget {
     }, [giveOrderId.value]);
 
     return CustomErrorHandler(
-      child: HomeView(
-        order: apiResponse?.data,
-        assignOrder: assignOrderCallback,
-        takeOrder: takeOrderCallback,
-        giveOrder: giveOrderCallback,
-      ),
+      child: apiResponse?.data != null
+          ? apiResponse?.data.message == null
+              ? HomeView(
+                  orders: apiResponse?.data.order,
+                  assignOrder: assignOrderCallback,
+                  takeOrder: takeOrderCallback,
+                  giveOrder: giveOrderCallback,
+                )
+              : Container(
+                  child: Center(
+                    child: Container(
+                      margin:
+                      EdgeInsets.only(top: 16.toHeight, bottom: 16.toHeight),
+                      child: Text(
+                        'You have no order.',
+                        style: TextStyle(fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                  )
+                )
+          : Container(),
       statuses: [apiResponse.status],
       errors: [apiResponse.error],
     );
