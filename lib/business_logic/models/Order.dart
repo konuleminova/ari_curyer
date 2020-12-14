@@ -5,8 +5,14 @@ class OrderList {
 
   OrderList.fromJson(Map<String, dynamic> json) {
     found = json['found'];
-    order = json['data'] != 'waiting'|| json['error']=='1'? listOrdersFromJson(json['data']) : [];
-    message = json['data'] == 'waiting' ? json['data'] : json['error']=='1'?json['message']:null;
+    order = json['data'] != 'waiting' || json['error'] == '1'
+        ? listOrdersFromJson(json['data'])
+        : [];
+    message = json['data'] == 'waiting'
+        ? json['data']
+        : json['error'] == '1'
+            ? json['message']
+            : null;
   }
 }
 
@@ -27,6 +33,7 @@ class Order {
   String rest_name;
   String rest_address;
   List<Food> foods;
+  String finished_time;
 
   Order.fromJson(Map<String, dynamic> json) {
     message = json['message'];
@@ -41,6 +48,7 @@ class Order {
     user_name = json['user_name'];
     rest_address = json['rest_address'];
     foods = json['foods'] != null ? listFoodFromJson(json['foods']) : null;
+    finished_time = json['finished_time'] ?? '';
   }
 }
 

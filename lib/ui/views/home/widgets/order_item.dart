@@ -2,8 +2,9 @@ import 'package:ari_kuryer/business_logic/models/Order.dart';
 import 'package:ari_kuryer/utils/theme_color.dart';
 import 'package:flutter/material.dart';
 import 'package:ari_kuryer/utils/size_config.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
-class OrderItemWidget extends StatelessWidget {
+class OrderItemWidget extends HookWidget {
   final Order order;
   Function(String orderId) assignOrder;
   final Function(String orderId) takeOrder;
@@ -17,6 +18,7 @@ class OrderItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var valueExpaned = useState<bool>(false);
     if (order.status == 'go to user') {
       statusColor = ThemeColor().blue;
       statusText = 'DONE';
@@ -28,115 +30,193 @@ class OrderItemWidget extends StatelessWidget {
       statusText = 'I WANT THIS';
     }
     // TODO: implement build
-    return Container(
-        height: 220.toHeight,
-        margin: EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(16), topRight: Radius.circular(16)),
-          color: Colors.white,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Expanded(
-              child: Container(
-                padding: EdgeInsets.all(24.toWidth),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Expanded(
-                        child: ListView.builder(
-                            shrinkWrap: true,
-                            // physics: NeverScrollableScrollPhysics(),
-                            itemCount: order.foods.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Container(
-                                  margin: EdgeInsets.only(bottom: 4.toHeight),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(
-                                        "${index + 1}. ${order.foods[index].data.name ?? ''}",
-                                        style: TextStyle(
-                                            fontSize: 13.toFont,
-                                            fontWeight: FontWeight.w500),
-                                        maxLines: 3,
-                                      ),
-                                      SizedBox(
-                                        height: 4.toHeight,
-                                      ),
-                                      Text(
-                                        order.foods[index].data.information ?? '',
-                                        style: TextStyle(fontSize: 11.toFont),
-                                      )
-                                    ],
-                                  ));
-                            })),
-                    SizedBox(
-                      width: 26.toWidth,
-                    ),
-                    Text(
-                      order.order ?? '',
-                      style: TextStyle(fontWeight: FontWeight.w700),
-                    )
-                  ],
-                ),
+    return ExpansionTile(
+      initiallyExpanded: valueExpaned.value,
+      trailing: SizedBox(),
+      tilePadding: EdgeInsets.all(0),
+      onExpansionChanged: (v) {
+        valueExpaned.value = v;
+      },
+      title: !valueExpaned.value
+          ? Container(
+              height: 60.toHeight,
+              width: SizeConfig().screenWidth,
+              margin: EdgeInsets.only(
+                left: 24.toWidth,
               ),
-            ),
-            InkWell(
-              onTap: () {
-                if (order.order != null) {
-                  if (order.status == 'go to rest') {
-                    takeOrder(order.order);
-                  } else if (order.status == 'go to user') {
-                    giveOrder(order.order);
-                  } else if (order.status == 'i want this') {
-                    assignOrder(order.order);
-                  }
-                }
-              },
-              child: Container(
-                margin: EdgeInsets.only(
-                  left: 16,
-                  right: 16,
-                  bottom: 16,
-                ),
-                padding: EdgeInsets.all(16.toWidth),
-                width: SizeConfig().screenHeight,
-                height: 54.toHeight,
-                color: statusColor,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      statusText,
-                      style: TextStyle(
-                          fontSize: 19.toFont,
-                          fontWeight: FontWeight.w700,
-                          color: statusColor == ThemeColor().yellowColor
-                              ? Colors.black
-                              : Colors.white),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(15)),
+                color: Colors.white,
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      child: Text(order.order ?? ''),
+                      margin: EdgeInsets.only(left: 24.toWidth),
                     ),
-                    SizedBox(
-                      width: 4.toWidth,
+                  ),
+                  Expanded(
+                    flex: 3,
+                    child: Container(
+                      child: Text(
+                        order.rest_name ?? '',
+                        style: TextStyle(color: ThemeColor().greenColor),
+                      ),
+                      margin: EdgeInsets.only(left: 8.toWidth),
                     ),
-                    Image.asset(
-                      'assets/images/done.png',
-                      color: statusColor == ThemeColor().yellowColor
-                          ? Colors.black
-                          : Colors.white,
-                      height: 19.toHeight,
-                    )
-                  ],
-                ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      child: Text(
+                        order.finished_time.substring(10) ?? '',
+                        style: TextStyle(
+                            color: ThemeColor().greenColor, fontSize: 12),
+                      ),
+                      margin: EdgeInsets.only(left: 8.toWidth),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 4.toWidth,
+                  ),
+                  CircleAvatar(
+                      backgroundColor: ThemeColor().yellowColor,
+                      child: Image.asset(
+                        'assets/images/done.png',
+                        color: statusColor == ThemeColor().yellowColor
+                            ? Colors.black
+                            : Colors.white,
+                        height: 14.toHeight,
+                      )),
+                  SizedBox(
+                    width: 16.toWidth,
+                  )
+                ],
               ),
             )
-          ],
-        ));
+          : SizedBox(),
+      children: [
+        InkWell(
+          onTap: (){
+            valueExpaned.value=false;
+          },
+          child: valueExpaned.value?Container(
+              height: 220.toHeight,
+              margin: EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(16)),
+                color: Colors.white,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Expanded(
+                    child: Container(
+                      padding: EdgeInsets.all(24.toWidth),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Expanded(
+                              child: ListView.builder(
+                                  shrinkWrap: true,
+                                  // physics: NeverScrollableScrollPhysics(),
+                                  itemCount: order.foods.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return Container(
+                                        margin:
+                                            EdgeInsets.only(bottom: 4.toHeight),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            Text(
+                                              "${index + 1}. ${order.foods[index].data.name ?? ''}",
+                                              style: TextStyle(
+                                                  fontSize: 13.toFont,
+                                                  fontWeight: FontWeight.w500),
+                                              maxLines: 3,
+                                            ),
+                                            SizedBox(
+                                              height: 4.toHeight,
+                                            ),
+                                            Text(
+                                              order.foods[index].data
+                                                      .information ??
+                                                  '',
+                                              style: TextStyle(
+                                                  fontSize: 11.toFont),
+                                            )
+                                          ],
+                                        ));
+                                  })),
+                          SizedBox(
+                            width: 26.toWidth,
+                          ),
+                          Text(
+                            order.order ?? '',
+                            style: TextStyle(fontWeight: FontWeight.w700),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      if (order.order != null) {
+                        if (order.status == 'go to rest') {
+                          takeOrder(order.order);
+                        } else if (order.status == 'go to user') {
+                          giveOrder(order.order);
+                        } else if (order.status == 'i want this') {
+                          assignOrder(order.order);
+                        }
+                      }
+                    },
+                    child: Container(
+                      margin: EdgeInsets.only(
+                        left: 16,
+                        right: 16,
+                        bottom: 16,
+                      ),
+                      padding: EdgeInsets.all(16.toWidth),
+                      width: SizeConfig().screenHeight,
+                      height: 54.toHeight,
+                      color: statusColor,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            statusText,
+                            style: TextStyle(
+                                fontSize: 19.toFont,
+                                fontWeight: FontWeight.w700,
+                                color: statusColor == ThemeColor().yellowColor
+                                    ? Colors.black
+                                    : Colors.white),
+                          ),
+                          SizedBox(
+                            width: 4.toWidth,
+                          ),
+                          Image.asset(
+                            'assets/images/done.png',
+                            color: statusColor == ThemeColor().yellowColor
+                                ? Colors.black
+                                : Colors.white,
+                            height: 19.toHeight,
+                          )
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              )):SizedBox(),
+        )
+      ],
+    );
   }
 }

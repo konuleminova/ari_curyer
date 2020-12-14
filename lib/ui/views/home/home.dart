@@ -30,7 +30,7 @@ class HomeView extends StatelessWidget {
                   ),
                 ),
               )
-            : ListView.builder(
+            : Container( margin: EdgeInsets.only(top: 16.toHeight),child:ListView.builder(
                 shrinkWrap: true,
                 itemCount: orders.length,
                 itemBuilder: (BuildContext context, int index) {
@@ -46,7 +46,7 @@ class HomeView extends StatelessWidget {
                         orders[index].status == 'go to user' ||
                                 orders[index].status == 'go to rest'
                             ? Container(
-                                height: 250.toHeight,
+                                height: 280.toHeight,
                                 child: GoogleMapView(
                                   coords: orders[index].status == 'go to user'
                                       ? orders[index].user_coords
@@ -64,7 +64,7 @@ class HomeView extends StatelessWidget {
                     //height: SizeConfig().screenHeight,
                     //width: SizeConfig().screenWidth,
                   );
-                })
+                }))
         : Container(
             child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
