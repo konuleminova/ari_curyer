@@ -64,7 +64,7 @@ class CustomAppBar extends HookWidget implements PreferredSizeWidget {
                                     color: ThemeColor().blue,
                                     borderRadius: BorderRadius.circular(20)),
                                 child: Text(
-                                  'Cıxış',
+                                  'Çıxış',
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 14.toFont),
                                 ),

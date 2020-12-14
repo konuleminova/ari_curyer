@@ -50,6 +50,7 @@ class LoginView extends StatelessWidget {
                 Container(
                   color: Colors.white,
                   child: TextField(
+                    obscureText: true,
                     controller: passController,
                     decoration: InputDecoration(
                         contentPadding: EdgeInsets.only(left: 4.toWidth),
