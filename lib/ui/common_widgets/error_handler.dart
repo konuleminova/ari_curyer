@@ -18,27 +18,19 @@ class CustomErrorHandler extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AppException error =
-        errors.firstWhere((element) => element != null, orElse: () => null);
-    final bool hasError = error != null;
-    final bool isLoading = statuses.firstWhere(
-            (element) => element == Status.Loading,
-            orElse: () => null) !=
-        null;
     final ctx = useContext();
     useSideEffect(() {
-      if (hasError) {
+      if (statuses[0] == Status.Error) {
         showDialog(
             context: ctx,
             builder: (BuildContext context) => ErrorDialog(
-                  errorMessage: error.message ?? "Some Message",
+                  errorMessage: errors[0].message ?? "Some Message",
                 ));
       }
 
       return () {};
-    }, [hasError, error]);
-
-    return isLoading ? Loading() : child;
+    }, [errors]);
+    return statuses[0] == Status.Loading ? Loading() : child;
   }
 }
 
