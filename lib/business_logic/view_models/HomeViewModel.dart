@@ -16,6 +16,7 @@ import 'package:ari_kuryer/utils/size_config.dart';
 
 class HomeViewModel extends HookWidget {
   Timer timer;
+  Timer timer2;
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +42,15 @@ class HomeViewModel extends HookWidget {
       });
       return () {
         timer.cancel();
+      };
+    }, []);
+
+    useEffect(() {
+      timer2 = Timer.periodic(Duration(minutes: 1), (timer) {
+        refreshKey.value=new UniqueKey();
+      });
+      return () {
+        timer2.cancel();
       };
     }, []);
     //UPDATE CURYER COORDINATES
