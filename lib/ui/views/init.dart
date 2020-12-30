@@ -6,6 +6,7 @@ import 'package:ari_kuryer/services/provider/provider.dart';
 import 'package:ari_kuryer/ui/common_widgets/custom_appbar.dart';
 import 'package:ari_kuryer/ui/provider/token_action.dart';
 import 'package:ari_kuryer/ui/provider/token_status.dart';
+import 'package:ari_kuryer/utils/local_notification/local_notification.dart';
 import 'package:ari_kuryer/utils/sharedpref/sp_util.dart';
 import 'package:ari_kuryer/utils/size_config.dart';
 import 'package:ari_kuryer/utils/theme_color.dart';

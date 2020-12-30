@@ -1,10 +1,14 @@
 import 'dart:async';
-
+import 'dart:convert';
+import 'package:ari_kuryer/services/api_helper/api_config.dart';
+import 'package:ari_kuryer/utils/sharedpref/sp_util.dart';
+import 'package:http/http.dart' as http;
+import 'package:ari_kuryer/business_logic/models/Order.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class NotificationUtils {
   FlutterLocalNotificationsPlugin notifPlugin;
-
+  ApiConfig apiConfig;
   static final NotificationUtils _singleton = NotificationUtils._internal();
 
   factory NotificationUtils() {
@@ -26,6 +30,16 @@ class NotificationUtils {
   }
 
   Future<void> scheduleNotification() async {
+    Timer.periodic(Duration(seconds: 3), (timer) async {
+      fetchAlbum();
+    });
+
+  }
+
+  Future<OrderList> fetchAlbum() async {
+    if (apiConfig == null) {
+      apiConfig = new ApiConfig();
+    }
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
         'your channel id', 'your channel name', 'your channel description',
         importance: Importance.Max, priority: Priority.High);
@@ -33,15 +47,29 @@ class NotificationUtils {
         new IOSNotificationDetails(sound: "slow_spring_board.aiff");
     var platformChannelSpecifics = new NotificationDetails(
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-//    Timer.periodic(Duration(seconds: 3), (timer) async {
-//
-//    });
-    await notifPlugin.show(
-      0,
-      'You have new order',
-      'Please review your orders',
-      platformChannelSpecifics,
-      payload: 'Custom_Sound',
-    );
+
+    print('BACKGROUND FETCH  ${http.get(apiConfig.FETCH_ORDER_STATUS(SpUtil.getString('token')))}');
+    final response =
+        await http.get(apiConfig.FETCH_ORDER_STATUS(SpUtil.getString('token')));
+
+    if (response.statusCode == 200) {
+      OrderList apiResponse = OrderList.fromJson(jsonDecode(response.body));
+      for (int i = 0; i < apiResponse.found; i++) {
+        if (apiResponse?.order[i].status == 'i want this') {
+          await notifPlugin.show(
+            0,
+            'You have new order',
+            'Please review your orders',
+            platformChannelSpecifics,
+            payload: 'Custom_Sound',
+          );
+        }
+        break;
+      }
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to load album');
+    }
   }
 }

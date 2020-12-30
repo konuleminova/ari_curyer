@@ -80,12 +80,11 @@ class HomeViewModel extends HookWidget {
     }, [apiResponse]);
 
     useEffect(() {
-      Timer.periodic(Duration(seconds: 3), (timer) {
+      timer2=Timer.periodic(Duration(seconds: 3), (timer) {
         refreshKey.value=new UniqueKey();
-        NotificationUtils().scheduleNotification();
       },);
       return () {
-        //timer2.cancel();
+        timer2.cancel();
       };
     }, []);
 

@@ -1,4 +1,5 @@
 import 'package:ari_kuryer/ui/views/init.dart';
+import 'package:ari_kuryer/utils/local_notification/local_notification.dart';
 import 'package:ari_kuryer/utils/theme_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
