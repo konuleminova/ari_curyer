@@ -7,6 +7,7 @@ import 'package:ari_kuryer/services/services/order_service.dart';
 import 'package:ari_kuryer/services/services/update_coords.dart';
 import 'package:ari_kuryer/ui/common_widgets/error_handler.dart';
 import 'package:ari_kuryer/ui/views/home/home.dart';
+import 'package:ari_kuryer/utils/local_notification/local_notification.dart';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,7 @@ class HomeViewModel extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    NotificationUtils().init();
     var assignOrderId = useState<String>();
     var takeOrderId = useState<String>();
     var giveOrderId = useState<String>();
@@ -29,7 +31,7 @@ class HomeViewModel extends HookWidget {
 
     //Timer for update  CURYER COORDINATES
     useEffect(() {
-      timer = Timer.periodic(Duration(seconds: 5), (timer) {
+     Timer.periodic(Duration(seconds: 5), (timer) {
         if (Platform.isAndroid) {
           Geolocator.checkPermission().then((value) {
             Geolocator.getCurrentPosition(
@@ -41,18 +43,11 @@ class HomeViewModel extends HookWidget {
         }
       });
       return () {
-        timer.cancel();
+        //timer.cancel();
       };
     }, []);
 
-    useEffect(() {
-      timer2 = Timer.periodic(Duration(minutes: 1), (timer) {
-        refreshKey.value=new UniqueKey();
-      });
-      return () {
-        timer2.cancel();
-      };
-    }, []);
+
     //UPDATE CURYER COORDINATES
     useUpdateCuryerCoords(curyerCoords.value);
 
@@ -75,6 +70,7 @@ class HomeViewModel extends HookWidget {
         for (int i = 0; i < apiResponse?.data.found; i++) {
           if (apiResponse?.data.order[i].status == 'i want this') {
             AudioCache().play("songs/buzz.mp3");
+
           }
           break;
         }
@@ -82,6 +78,16 @@ class HomeViewModel extends HookWidget {
 
       return () {};
     }, [apiResponse]);
+
+    useEffect(() {
+      Timer.periodic(Duration(seconds: 3), (timer) {
+        refreshKey.value=new UniqueKey();
+        NotificationUtils().scheduleNotification();
+      },);
+      return () {
+        //timer2.cancel();
+      };
+    }, []);
 
     useEffect(() {
       refreshKey.value = new UniqueKey();

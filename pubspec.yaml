@@ -40,15 +40,17 @@ dependencies:
   audioplayers: ^0.17.0
   map_launcher: ^1.1.1
   flutter_svg: ^0.19.1
+  flutter_local_notifications: ^1.4.4+1
+  background_fetch: ^0.6.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
+  # For information on the generic Dart part of this file, see the
+  # following page: https://dart.dev/tools/pub/pubspec
 
-# The following section is specific to Flutter.
+  # The following section is specific to Flutter.
   flutter_launcher_icons: ^0.8.1
 
 flutter_icons:
