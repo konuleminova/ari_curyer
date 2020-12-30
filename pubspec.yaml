@@ -38,6 +38,8 @@ dependencies:
   google_maps_flutter: ^0.5.30
   url_launcher: ^5.7.6
   audioplayers: ^0.17.0
+  map_launcher: ^1.1.1
+  flutter_svg: ^0.19.1
 
 dev_dependencies:
   flutter_test:

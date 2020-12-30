@@ -1,9 +1,10 @@
 import 'dart:async';
-import 'package:ari_kuryer/utils/map_utils.dart';
 import 'package:ari_kuryer/utils/sharedpref/sp_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ari_kuryer/utils/size_config.dart';
+import 'package:map_launcher/map_launcher.dart';
 
 class GoogleMapView extends StatelessWidget {
   Completer<GoogleMapController> _controller = Completer();
@@ -40,7 +41,7 @@ class GoogleMapView extends StatelessWidget {
                           SpUtil.getString('coords'),
                         ),
                         position: LatLng(lat, lng))),
-                  mapType: MapType.normal,
+                  // mapType: MapType.normal,
                   initialCameraPosition:
                       CameraPosition(target: LatLng(lat, lng), zoom: 13),
                   onMapCreated: (GoogleMapController googleMapController) {
@@ -92,7 +93,9 @@ class GoogleMapView extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizedBox(width: 8.toWidth,),
+                      SizedBox(
+                        width: 8.toWidth,
+                      ),
                       InkWell(
                         child: Container(
                             width: 90.toWidth,
@@ -108,7 +111,8 @@ class GoogleMapView extends StatelessWidget {
                               ),
                             )),
                         onTap: () {
-                          MapUtils.openMap(lat, lng);
+                          openMapsSheet(context, lat, lng, address);
+                          //  MapUtils.openMap(lat, lng);
                         },
                       )
                     ],
@@ -116,5 +120,44 @@ class GoogleMapView extends StatelessWidget {
             )
           ],
         ));
+  }
+}
+
+openMapsSheet(context, lat, lng, address) async {
+  try {
+    final coords = Coords(lat, lng);
+    final title = address;
+    final availableMaps = await MapLauncher.installedMaps;
+
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return SafeArea(
+          child: SingleChildScrollView(
+            child: Container(
+              child: Wrap(
+                children: <Widget>[
+                  for (var map in availableMaps)
+                    ListTile(
+                      onTap: () => map.showMarker(
+                        coords: coords,
+                        title: title,
+                      ),
+                      title: Text(map.mapName),
+                      leading: SvgPicture.asset(
+                        map.icon,
+                        height: 30.0,
+                        width: 30.0,
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  } catch (e) {
+    print(e);
   }
 }
