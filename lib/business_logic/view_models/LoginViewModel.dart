@@ -51,6 +51,7 @@ class LoginViewModel extends HookWidget {
         login.value = loginController.text;
         password.value = passController.text;
         loginKey.value = UniqueKey();
+        FocusManager.instance.primaryFocus.unfocus();
       }
     }, [login.value, password.value]);
 

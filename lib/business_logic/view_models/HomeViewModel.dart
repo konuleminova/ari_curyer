@@ -80,7 +80,7 @@ class HomeViewModel extends HookWidget {
     }, [apiResponse]);
 
     useEffect(() {
-      timer2=Timer.periodic(Duration(seconds: 3), (timer) {
+      timer2=Timer.periodic(Duration(seconds: 10), (timer) {
         refreshKey.value=new UniqueKey();
       },);
       return () {

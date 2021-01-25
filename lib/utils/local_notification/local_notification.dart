@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:ari_kuryer/services/api_helper/api_config.dart';
 import 'package:ari_kuryer/utils/sharedpref/sp_util.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:ari_kuryer/business_logic/models/Order.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -30,13 +32,13 @@ class NotificationUtils {
   }
 
   Future<void> scheduleNotification() async {
-    Timer.periodic(Duration(seconds: 3), (timer) async {
-      fetchAlbum();
+    Timer.periodic(Duration(seconds: 10), (timer) async {
+      updateCurrentCoords();
+      fetchOrderStatus();
     });
-
   }
 
-  Future<OrderList> fetchAlbum() async {
+  Future<OrderList> fetchOrderStatus() async {
     if (apiConfig == null) {
       apiConfig = new ApiConfig();
     }
@@ -47,11 +49,8 @@ class NotificationUtils {
         new IOSNotificationDetails(sound: "slow_spring_board.aiff");
     var platformChannelSpecifics = new NotificationDetails(
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-
-    print('BACKGROUND FETCH  ${http.get(apiConfig.FETCH_ORDER_STATUS(SpUtil.getString('token')))}');
     final response =
         await http.get(apiConfig.FETCH_ORDER_STATUS(SpUtil.getString('token')));
-
     if (response.statusCode == 200) {
       OrderList apiResponse = OrderList.fromJson(jsonDecode(response.body));
       for (int i = 0; i < apiResponse.found; i++) {
@@ -70,6 +69,25 @@ class NotificationUtils {
       // If the server did not return a 200 OK response,
       // then throw an exception.
       throw Exception('Failed to load album');
+    }
+  }
+
+  updateCurrentCoords() {
+    if (Platform.isAndroid) {
+      Geolocator.checkPermission().then((value) {
+        Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+            .then((value) {
+          http
+              .get(apiConfig.UPDATE_COORDS(
+                  '${value.latitude},${value.longitude}',
+                  SpUtil.getString('token')))
+              .then((response) {
+            if (response.statusCode == 200) {
+              print('RESPONSE UPDATE COORDS ${response.body}');
+            }
+          });
+        });
+      });
     }
   }
 }
