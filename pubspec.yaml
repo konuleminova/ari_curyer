@@ -36,12 +36,12 @@ dependencies:
   geolocator: ^6.1.7
   location_permissions: ^3.0.0+1
   google_maps_flutter: ^0.5.30
-  url_launcher: ^5.7.6
   audioplayers: ^0.17.0
   map_launcher: ^1.1.1
   flutter_svg: ^0.19.1
   flutter_local_notifications: ^1.4.4+1
   http: ^0.12.2
+  url_launcher: ^5.7.10
 
 dev_dependencies:
   flutter_test:

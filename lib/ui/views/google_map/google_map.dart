@@ -31,9 +31,7 @@ class GoogleMapView extends StatelessWidget {
         child: Stack(
           children: <Widget>[
             ClipRRect(
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(10),
-                    bottomRight: Radius.circular(10)),
+                borderRadius: BorderRadius.circular(10),
                 child: GoogleMap(
                   markers: Set<Marker>()
                     ..add(Marker(
