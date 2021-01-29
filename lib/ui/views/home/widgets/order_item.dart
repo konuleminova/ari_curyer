@@ -143,7 +143,7 @@ class OrderItemWidget extends HookWidget {
                                   CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Text(
-                                      "${index + 1}. ${order.foods[index].data.name ?? ''}",
+                                      "${order.foods[index].count??""}. ${order.foods[index].data.name ?? ''}",
                                       style: TextStyle(
                                           fontSize: 13.toFont,
                                           fontWeight:

@@ -73,40 +73,46 @@ class HomeView extends StatelessWidget {
                                                 : orders[index].rest_address ??
                                                     '',
                                           )),
-                                      InkWell(
-                                        child: Container(
-                                            decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    color: ThemeColor().grey1),
-                                                color: ThemeColor().blue),
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 24.toWidth),
-                                            height: 56.toHeight,
-                                            alignment: Alignment.center,
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: <Widget>[
-                                                Text(
-                                                  orders[index].user_name ?? '',
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      fontSize: 16.toFont),
-                                                ),
-                                                Image.asset(
-                                                  'assets/images/call.png',
-                                                  width: 30,
-                                                  height: 30,
-                                                  color: Colors.white,
-                                                )
-                                              ],
-                                            )),
-                                        onTap: () => UrlLauncher.launch(
-                                            "tel://${orders[index].user_phone}"),
-                                      )
+                                      orders[index].status == 'go to user'
+                                          ? InkWell(
+                                              child: Container(
+                                                  decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                          color: ThemeColor()
+                                                              .grey1),
+                                                      color: ThemeColor().blue),
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: 24.toWidth),
+                                                  height: 56.toHeight,
+                                                  alignment: Alignment.center,
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: <Widget>[
+                                                      Text(
+                                                        orders[index]
+                                                                .user_name ??
+                                                            '',
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            fontSize:
+                                                                16.toFont),
+                                                      ),
+                                                      Image.asset(
+                                                        'assets/images/call.png',
+                                                        width: 30,
+                                                        height: 30,
+                                                        color: Colors.white,
+                                                      )
+                                                    ],
+                                                  )),
+                                              onTap: () => UrlLauncher.launch(
+                                                  "tel://${orders[index].user_phone}"),
+                                            )
+                                          : SizedBox()
                                     ],
                                   )
                                 : SizedBox()
