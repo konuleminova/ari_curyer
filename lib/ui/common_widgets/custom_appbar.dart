@@ -1,5 +1,6 @@
 import 'package:ari_kuryer/business_logic/routes/route_names.dart';
 import 'package:ari_kuryer/business_logic/routes/route_navigation.dart';
+import 'package:ari_kuryer/services/services/login_service.dart';
 import 'package:ari_kuryer/utils/image_config.dart';
 import 'package:ari_kuryer/utils/sharedpref/sp_util.dart';
 import 'package:ari_kuryer/utils/theme_color.dart';
@@ -17,6 +18,8 @@ class CustomAppBar extends HookWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    ValueNotifier<UniqueKey> logoutKey = useState<UniqueKey>();
+    useLogout(logoutKey.value);
     // TODO: implement build
     return Stack(
       children: <Widget>[
@@ -70,9 +73,13 @@ class CustomAppBar extends HookWidget implements PreferredSizeWidget {
                                 ),
                               ),
                               onTap: () {
-                                clearToken.call();
-                                SpUtil.remove('token').then((value) {
-                                  pushReplaceRouteWithName('/');
+                                logoutKey.value = new UniqueKey();
+                                Future.delayed(Duration(milliseconds: 500))
+                                    .then((value) {
+                                  clearToken.call();
+                                  SpUtil.remove('token').then((value) {
+                                    pushReplaceRouteWithName('/');
+                                  });
                                 });
                               },
                             )),

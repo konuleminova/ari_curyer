@@ -17,4 +17,6 @@ class ApiConfig {
 
   String UPDATE_COORDS(String coords, String token) =>
       '${BASE_URl}updatecoords&coords=${coords}&token=${token}';
+
+  String LOGOUT(String token) => '${BASE_URl}logout&token=${token}';
 }

@@ -8,6 +8,7 @@ import 'package:ari_kuryer/services/services/update_coords.dart';
 import 'package:ari_kuryer/ui/common_widgets/error_handler.dart';
 import 'package:ari_kuryer/ui/views/home/home.dart';
 import 'package:ari_kuryer/utils/local_notification/local_notification.dart';
+import 'package:ari_kuryer/utils/sharedpref/sp_util.dart';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -31,8 +32,8 @@ class HomeViewModel extends HookWidget {
 
     //Timer for update  CURYER COORDINATES
     useEffect(() {
-     Timer.periodic(Duration(seconds: 5), (timer) {
-        if (Platform.isAndroid) {
+      Timer.periodic(Duration(seconds: 5), (timer) {
+        if (Platform.isAndroid && SpUtil.getString('token').isNotEmpty) {
           Geolocator.checkPermission().then((value) {
             Geolocator.getCurrentPosition(
                     desiredAccuracy: LocationAccuracy.high)
@@ -46,7 +47,6 @@ class HomeViewModel extends HookWidget {
         //timer.cancel();
       };
     }, []);
-
 
     //UPDATE CURYER COORDINATES
     useUpdateCuryerCoords(curyerCoords.value);
@@ -70,7 +70,6 @@ class HomeViewModel extends HookWidget {
         for (int i = 0; i < apiResponse?.data.found; i++) {
           if (apiResponse?.data.order[i].status == 'i want this') {
             AudioCache().play("songs/buzz.mp3");
-
           }
           break;
         }
@@ -80,9 +79,12 @@ class HomeViewModel extends HookWidget {
     }, [apiResponse]);
 
     useEffect(() {
-      timer2=Timer.periodic(Duration(seconds: 30), (timer) {
-        refreshKey.value=new UniqueKey();
-      },);
+      timer2 = Timer.periodic(
+        Duration(seconds: 30),
+        (timer) {
+          refreshKey.value = new UniqueKey();
+        },
+      );
       return () {
         timer2.cancel();
       };
@@ -145,16 +147,15 @@ class HomeViewModel extends HookWidget {
                 )
               : Container(
                   child: Center(
-                    child: Container(
-                      margin:
-                      EdgeInsets.only(top: 16.toHeight, bottom: 16.toHeight),
-                      child: Text(
-                        'You have no order.',
-                        style: TextStyle(fontWeight: FontWeight.w500),
-                      ),
+                  child: Container(
+                    margin:
+                        EdgeInsets.only(top: 16.toHeight, bottom: 16.toHeight),
+                    child: Text(
+                      'You have no order.',
+                      style: TextStyle(fontWeight: FontWeight.w500),
                     ),
-                  )
-                )
+                  ),
+                ))
           : Container(),
       statuses: [apiResponse.status],
       errors: [apiResponse.error],
