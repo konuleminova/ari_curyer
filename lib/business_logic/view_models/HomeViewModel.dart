@@ -51,7 +51,7 @@ class HomeViewModel extends HookWidget {
     }, []);
 
     //UPDATE CURYER COORDINATES
-    useUpdateCuryerCoords(curyerCoords.value, assignOrderId.value);
+    useUpdateCuryerCoords(curyerCoords.value, assignOrderId.value ?? '0');
 
     //ASSIGN ORDER
     ApiResponse<OrderList> assignResponse =
