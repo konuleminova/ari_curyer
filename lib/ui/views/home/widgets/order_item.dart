@@ -111,7 +111,7 @@ class OrderItemWidget extends HookWidget {
   }
 
   _seconWidget() => Container(
-      height: 220.toHeight,
+      //height: 220.toHeight,
       margin: EdgeInsets.only(
           left: 16.toWidth, right: 16.toWidth, bottom: 4.toHeight),
       decoration: BoxDecoration(
@@ -122,53 +122,52 @@ class OrderItemWidget extends HookWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Expanded(
-            child: Container(
-              padding: EdgeInsets.all(24.toWidth),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Expanded(
-                      child: ListView.builder(
-                          shrinkWrap: true,
-                          // physics: NeverScrollableScrollPhysics(),
-                          itemCount: order.foods.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Container(
-                                margin: EdgeInsets.only(bottom: 4.toHeight),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                      "${order.foods[index].count ?? ""}. ${order.foods[index].data.name ?? ''}",
-                                      style: TextStyle(
-                                          fontSize: 13.toFont,
-                                          fontWeight: FontWeight.w500),
-                                      maxLines: 3,
-                                    ),
-                                    SizedBox(
-                                      height: 4.toHeight,
-                                    ),
-                                    Text(
-                                      order.foods[index].data.information ?? '',
-                                      style: TextStyle(fontSize: 11.toFont),
-                                    ),
-                                    SizedBox(
-                                      height: 8,
-                                    ),
-                                  ],
-                                ));
-                          })),
-                  SizedBox(
-                    width: 26.toWidth,
-                  ),
-                  Text(
-                    order.order ?? '',
-                    style: TextStyle(fontWeight: FontWeight.w700),
-                  )
-                ],
-              ),
+          Container(
+            padding: EdgeInsets.all(24.toWidth),
+            width: SizeConfig().screenWidth,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Expanded(
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: order.foods.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Container(
+                              margin: EdgeInsets.only(bottom: 4.toHeight),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    "${order.foods[index].count ?? ""}. ${order.foods[index].data.name ?? ''}",
+                                    style: TextStyle(
+                                        fontSize: 13.toFont,
+                                        fontWeight: FontWeight.w500),
+                                    maxLines: 3,
+                                  ),
+                                  SizedBox(
+                                    height: 4.toHeight,
+                                  ),
+                                  Text(
+                                    order.foods[index].data.information ?? '',
+                                    style: TextStyle(fontSize: 11.toFont),
+                                  ),
+                                  SizedBox(
+                                    height: 8,
+                                  ),
+                                ],
+                              ));
+                        })),
+                SizedBox(
+                  width: 26.toWidth,
+                ),
+                Text(
+                  order.order ?? '',
+                  style: TextStyle(fontWeight: FontWeight.w700),
+                )
+              ],
             ),
           ),
           Container(
