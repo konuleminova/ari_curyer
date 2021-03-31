@@ -34,6 +34,7 @@ class Order {
   String rest_address;
   List<Food> foods;
   String finished_time;
+  String km;
 
   Order.fromJson(Map<String, dynamic> json) {
     message = json['message'];
@@ -46,10 +47,11 @@ class Order {
     rest_coords = json['rest_coords'];
     rest_name = json['rest_name'];
     user_name = json['user_name'];
-    user_phone=json['user_phone'];
+    user_phone = json['user_phone'];
     rest_address = json['rest_address'];
     foods = json['foods'] != null ? listFoodFromJson(json['foods']) : null;
     finished_time = json['finished_time'] ?? '';
+    km = json['km'] ?? '';
   }
 }
 
@@ -75,7 +77,6 @@ class Data {
 class Food {
   var count;
   Data data;
-
 
   Food.fromJson(Map<String, dynamic> json) {
     data = Data.fromJson(json['food']);

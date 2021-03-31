@@ -16,7 +16,7 @@ class ApiConfig {
       '${BASE_URl}give&order=${orderId}&token=${token}';
 
   String UPDATE_COORDS(String coords, String orderId, String token) =>
-      '${BASE_URl}updatecoords&coords=${coords}orderId=${orderId}&token=${token}';
+      '${BASE_URl}updatecoords&coords=${coords}&orderId=${orderId.isEmpty??'0'}&token=${token}';
 
   String LOGOUT(String token) => '${BASE_URl}logout&token=${token}';
 }

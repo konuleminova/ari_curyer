@@ -30,86 +30,87 @@ class OrderItemWidget extends HookWidget {
       statusText = 'I WANT THIS';
     }
     // TODO: implement build
-    return order.status == 'i want this'?AnimatedCrossFade(
-        firstChild: InkWell(
-            onTap: () {
-              valueExpaned.value = true;
-            },
-            child: Container(
-              height: 60.toHeight,
-              width: SizeConfig().screenWidth,
-              margin: EdgeInsets.only(
-                  left: 16.toWidth, right: 16.toWidth, bottom: 4.toHeight),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(15)),
-                color: Colors.white,
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      child: Text(
-                        order.order ?? '',
-                        style: TextStyle(fontWeight: FontWeight.w500),
+    return order.status == 'i want this'
+        ? AnimatedCrossFade(
+            firstChild: InkWell(
+                onTap: () {
+                  valueExpaned.value = true;
+                },
+                child: Container(
+                  height: 60.toHeight,
+                  width: SizeConfig().screenWidth,
+                  margin: EdgeInsets.only(
+                      left: 16.toWidth, right: 16.toWidth, bottom: 4.toHeight),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                    color: Colors.white,
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          child: Text(
+                            order.order ?? '',
+                            style: TextStyle(fontWeight: FontWeight.w500),
+                          ),
+                          margin: EdgeInsets.only(left: 24.toWidth),
+                        ),
                       ),
-                      margin: EdgeInsets.only(left: 24.toWidth),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: Container(
-                      child: Text(
-                        order.rest_name ?? '',
-                        style: TextStyle(color: ThemeColor().greenColor),
+                      Expanded(
+                        flex: 3,
+                        child: Container(
+                          child: Text(
+                            order.rest_name ?? '',
+                            style: TextStyle(color: ThemeColor().greenColor),
+                          ),
+                          margin: EdgeInsets.only(left: 8.toWidth),
+                        ),
                       ),
-                      margin: EdgeInsets.only(left: 8.toWidth),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      child: Text(
-                        order.finished_time != null &&
-                                order.finished_time.length > 10
-                            ? order.finished_time.substring(10)
-                            : '' ?? '',
-                        style: TextStyle(
-                            color: ThemeColor().greenColor, fontSize: 12),
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          child: Text(
+                            order.finished_time != null &&
+                                    order.finished_time.length > 10
+                                ? order.finished_time.substring(10)
+                                : '' ?? '',
+                            style: TextStyle(
+                                color: ThemeColor().greenColor, fontSize: 12),
+                          ),
+                          margin: EdgeInsets.only(left: 8.toWidth),
+                        ),
                       ),
-                      margin: EdgeInsets.only(left: 8.toWidth),
-                    ),
+                      SizedBox(
+                        width: 4.toWidth,
+                      ),
+                      CircleAvatar(
+                          backgroundColor: ThemeColor().yellowColor,
+                          child: Image.asset(
+                            'assets/images/done.png',
+                            color: statusColor == ThemeColor().yellowColor
+                                ? Colors.black
+                                : Colors.white,
+                            height: 14.toHeight,
+                          )),
+                      SizedBox(
+                        width: 16.toWidth,
+                      )
+                    ],
                   ),
-                  SizedBox(
-                    width: 4.toWidth,
-                  ),
-                  CircleAvatar(
-                      backgroundColor: ThemeColor().yellowColor,
-                      child: Image.asset(
-                        'assets/images/done.png',
-                        color: statusColor == ThemeColor().yellowColor
-                            ? Colors.black
-                            : Colors.white,
-                        height: 14.toHeight,
-                      )),
-                  SizedBox(
-                    width: 16.toWidth,
-                  )
-                ],
-              ),
-            )),
-        secondChild: InkWell(
-            onTap: () {
-              valueExpaned.value = false;
-            },
-            child: _seconWidget()
-        ),
-        crossFadeState: !valueExpaned.value
-            ? CrossFadeState.showFirst
-            : CrossFadeState.showSecond,
-        duration: Duration(milliseconds: 300)):_seconWidget();
+                )),
+            secondChild: InkWell(
+                onTap: () {
+                  valueExpaned.value = false;
+                },
+                child: _seconWidget()),
+            crossFadeState: !valueExpaned.value
+                ? CrossFadeState.showFirst
+                : CrossFadeState.showSecond,
+            duration: Duration(milliseconds: 300))
+        : _seconWidget();
   }
 
-  _seconWidget() =>Container(
+  _seconWidget() => Container(
       height: 220.toHeight,
       margin: EdgeInsets.only(
           left: 16.toWidth, right: 16.toWidth, bottom: 4.toHeight),
@@ -133,33 +134,29 @@ class OrderItemWidget extends HookWidget {
                           shrinkWrap: true,
                           // physics: NeverScrollableScrollPhysics(),
                           itemCount: order.foods.length,
-                          itemBuilder:
-                              (BuildContext context, int index) {
+                          itemBuilder: (BuildContext context, int index) {
                             return Container(
-                                margin: EdgeInsets.only(
-                                    bottom: 4.toHeight),
+                                margin: EdgeInsets.only(bottom: 4.toHeight),
                                 child: Column(
-                                  crossAxisAlignment:
-                                  CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Text(
-                                      "${order.foods[index].count??""}. ${order.foods[index].data.name ?? ''}",
+                                      "${order.foods[index].count ?? ""}. ${order.foods[index].data.name ?? ''}",
                                       style: TextStyle(
                                           fontSize: 13.toFont,
-                                          fontWeight:
-                                          FontWeight.w500),
+                                          fontWeight: FontWeight.w500),
                                       maxLines: 3,
                                     ),
                                     SizedBox(
                                       height: 4.toHeight,
                                     ),
                                     Text(
-                                      order.foods[index].data
-                                          .information ??
-                                          '',
-                                      style: TextStyle(
-                                          fontSize: 11.toFont),
-                                    )
+                                      order.foods[index].data.information ?? '',
+                                      style: TextStyle(fontSize: 11.toFont),
+                                    ),
+                                    SizedBox(
+                                      height: 8,
+                                    ),
                                   ],
                                 ));
                           })),
@@ -172,6 +169,37 @@ class OrderItemWidget extends HookWidget {
                   )
                 ],
               ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(
+              left: 16,
+              right: 16,
+              bottom: 16,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  order.user_address ?? '',
+                  style: TextStyle(
+                      fontSize: 11.toFont, fontWeight: FontWeight.w700),
+                ),
+                SizedBox(
+                  height: 4,
+                ),
+                Text(
+                  order.rest_address ?? '',
+                  style: TextStyle(fontSize: 11.toFont),
+                ),
+                SizedBox(
+                  height: 4,
+                ),
+                Text(
+                  order.km ?? '',
+                  style: TextStyle(fontSize: 11.toFont),
+                ),
+              ],
             ),
           ),
           InkWell(

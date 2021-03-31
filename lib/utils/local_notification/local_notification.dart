@@ -75,8 +75,10 @@ class NotificationUtils {
   updateCurrentCoords() {
     if (Platform.isAndroid) {
       Geolocator.checkPermission().then((value) {
-        Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
+        print('check permission ${value}');
+        Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
             .then((value) {
+              print('√alue background ${value.latitude} ${value.longitude}');
           http
               .get(apiConfig.UPDATE_COORDS(
                   '${value.latitude},${value.longitude}',
