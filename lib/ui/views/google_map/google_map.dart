@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:ari_kuryer/ui/common_widgets/error_handler.dart';
 import 'package:ari_kuryer/utils/sharedpref/sp_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -77,14 +78,45 @@ class GoogleMapView extends StatelessWidget {
                                 height: 4.toHeight,
                               ),
                               Expanded(
-                                  child: Text(
-                                'Address: ${address ?? ''}',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 11.toFont,
+                                  child: InkWell(
+                                child: Text(
+                                  'Address: ${address ?? ''}',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 11.toFont,
+                                  ),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
+                                onTap: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) => Dialog(
+                                            backgroundColor: Colors.white,
+                                            child: Container(
+                                              height: 200,
+                                              alignment: Alignment.center,
+                                              decoration: BoxDecoration(
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.grey
+                                                        .withOpacity(0.2),
+                                                    spreadRadius: 5,
+                                                    blurRadius: 20,
+                                                    offset: Offset(0,
+                                                        3), // changes position of shadow
+                                                  ),
+                                                ],
+                                              ),
+                                              child: Text(
+                                                'Address: ${address ?? ''}',
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    color: Colors.black),
+                                              ),
+                                            ),
+                                          ));
+                                },
                               ))
                             ],
                             crossAxisAlignment: CrossAxisAlignment.start,
