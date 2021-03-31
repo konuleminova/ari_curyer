@@ -10,12 +10,12 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 //Update curyer coordinates
 
-ApiResponse<Order> useUpdateCuryerCoords(String coords) {
+ApiResponse<Order> useUpdateCuryerCoords(String coords,String orderId) {
   final ApiConfig apiConfig = useApiConfig();
   final DioConfig dioConfig = useMemoized(() {
     if (coords == null) return null;
     return DioConfig<Order>(
-        path: apiConfig.UPDATE_COORDS(coords, SpUtil.getString('token')),
+        path: apiConfig.UPDATE_COORDS(coords, orderId,SpUtil.getString('token')),
         transformResponse: (Response response) =>
             Order.fromJson(response.data));
   }, [coords]);

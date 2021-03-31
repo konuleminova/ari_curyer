@@ -38,7 +38,9 @@ class HomeViewModel extends HookWidget {
             Geolocator.getCurrentPosition(
                     desiredAccuracy: LocationAccuracy.high)
                 .then((value) {
-              curyerCoords.value = '${value.latitude},${value.longitude}';
+              if (curyerCoords.value != null) {
+                curyerCoords.value = '${value.latitude},${value.longitude}';
+              }
             });
           });
         }
@@ -49,7 +51,7 @@ class HomeViewModel extends HookWidget {
     }, []);
 
     //UPDATE CURYER COORDINATES
-    useUpdateCuryerCoords(curyerCoords.value);
+    useUpdateCuryerCoords(curyerCoords.value, assignOrderId.value);
 
     //ASSIGN ORDER
     ApiResponse<OrderList> assignResponse =
@@ -110,6 +112,8 @@ class HomeViewModel extends HookWidget {
     final assignOrderCallback = useCallback((String order) {
       if (order != null) {
         assignOrderId.value = order;
+        SpUtil.putString('orderId', assignOrderId.value);
+
         refreshKey.value = new UniqueKey();
       }
 

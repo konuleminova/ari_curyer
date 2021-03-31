@@ -80,6 +80,7 @@ class NotificationUtils {
           http
               .get(apiConfig.UPDATE_COORDS(
                   '${value.latitude},${value.longitude}',
+                  SpUtil.getString('orderId'),
                   SpUtil.getString('token')))
               .then((response) {
             if (response.statusCode == 200) {
