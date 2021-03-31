@@ -96,18 +96,6 @@ class GoogleMapView extends StatelessWidget {
                                             child: Container(
                                               height: 200,
                                               alignment: Alignment.center,
-                                              decoration: BoxDecoration(
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    color: Colors.grey
-                                                        .withOpacity(0.2),
-                                                    spreadRadius: 5,
-                                                    blurRadius: 20,
-                                                    offset: Offset(0,
-                                                        3), // changes position of shadow
-                                                  ),
-                                                ],
-                                              ),
                                               child: Text(
                                                 'Address: ${address ?? ''}',
                                                 textAlign: TextAlign.center,
