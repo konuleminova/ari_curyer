@@ -38,14 +38,19 @@ dependencies:
   google_maps_flutter: ^0.5.30
   audioplayers: ^0.17.0
   map_launcher: ^1.1.1
-  flutter_svg: ^0.19.1
+  flutter_svg: ^0.19.3
   flutter_local_notifications: ^1.4.4+1
   http: ^0.12.2
   url_launcher: ^5.7.10
+  background_fetch: ^0.7.1
+  flutter_background_geolocation:
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+
 
   # For information on the generic Dart part of this file, see the
   # following page: https://dart.dev/tools/pub/pubspec

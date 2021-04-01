@@ -71,7 +71,7 @@ class HomeViewModel extends HookWidget {
       if (apiResponse.status == Status.Done) {
         for (int i = 0; i < apiResponse?.data.found; i++) {
           if (apiResponse?.data.order[i].status == 'i want this') {
-          //  AudioCache().play("songs/buzz.mp3");
+            AudioCache().play("songs/buzz.mp3");
           }
           break;
         }
